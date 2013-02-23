@@ -26,11 +26,11 @@ static const char COURSE_FILENAME[] = "courses.txt";
 
 /*
  * This function was taken from
- * http://cboard.cprogramming.com/c-programming/
- * 95462-compiler-error-warning-implicit-declaration-function-strdup.html
- * as it's not part of the c89 standard but it is really *really* useful
+ * http://stackoverflow.com/questions/314401/how-to-read-a-line-from-the-console-in-c
+ * I could have used scanf, but I think just reading in a whole line each time and
+ * then parsing it makes everything easier to read in the rest of the source
  */
-char* strdup(const char* str);
+char* readline();
 
 /*
  * My functions

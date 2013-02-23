@@ -19,17 +19,41 @@
 
 /*
  * This function was taken from
- * http://cboard.cprogramming.com/c-programming/
- * 95462-compiler-error-warning-implicit-declaration-function-strdup.html
- * as it's not part of the c89 standard but it is really *really* useful
+ * http://stackoverflow.com/questions/314401/how-to-read-a-line-from-the-console-in-c
+ * I could have used scanf, but I think just reading in a whole line each time and
+ * then parsing it makes everything easier to read in the rest of the source
  */
-char* strdup(const char* str) {
-  int n = strlen(str) + 1;
-  char* dup = malloc(n);
-  if (dup) {
-    strcpy(dup, str);
+char* readline() {
+  char* line = malloc(100), *linep = line;
+  size_t lenmax = 100, len = lenmax;
+  int c;
+
+  if(line == NULL)
+    return NULL;
+
+  for(;;) {
+    c = fgetc(stdin);
+    if(c == EOF)
+      break;
+
+    if(--len == 0) {
+      len = lenmax;
+      char * linen = realloc(linep, lenmax *= 2);
+
+      if(linen == NULL) {
+        free(linep);
+        return NULL;
+      }
+      line = linen + (line - linep);
+      linep = linen;
+    }
+
+    if((*line++ = c) == '\n')
+      break;
   }
-  return dup;
+  *line = '\0';
+  strtok(linep, "\n"); /* this line is mine, just to strip the newline */
+  return linep;
 }
 
 char* make_event_dir(const char* root_dir, const char* event_name) {
