@@ -4,11 +4,11 @@
  * Tom Leaman (thl5@aber.ac.uk)
  */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "dbg.h"
 #include "data.h"
+#include "dbg.h"
 #include "util.h"
 
 Event* Event_new(const char* name, const char* date, const int hrs, const int mins) {
