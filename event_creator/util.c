@@ -26,7 +26,7 @@ char* strdup(const char* str) {
 }
 
 char* make_event_dir(const char* root_dir, const char* event_name) {
-  char* tmp_root;
+  char* new_dir;
   char* tmp_dir;
   int i;
 
@@ -42,25 +42,25 @@ char* make_event_dir(const char* root_dir, const char* event_name) {
 
   /* grab enough memory to contain the whole path */
   /* that is, length(root) + length(dir) + '/' + null */
-  tmp_root = malloc(sizeof(char) * (strlen(root_dir) + strlen(tmp_dir) + 2));
-  check_mem(tmp_root);
-  strcpy(tmp_root, root_dir);
-  strcat(tmp_root, tmp_dir);
-  strcat(tmp_root, "/");
+  new_dir = malloc(sizeof(char) * (strlen(root_dir) + strlen(tmp_dir) + 2));
+  check_mem(new_dir);
+  strcpy(new_dir, root_dir);
+  strcat(new_dir, tmp_dir);
+  strcat(new_dir, "/");
 
   /*
    * then we're going to either create the directory or establish that it already
    * exists
    */
-  if (mkdir(tmp_root, S_IRWXU|S_IRGRP|S_IXGRP) != 0) {
-    check(errno == EEXIST, "Could not create directory %s", tmp_root);
-    debug("%s already exists", tmp_root);
+  if (mkdir(new_dir, S_IRWXU|S_IRGRP|S_IXGRP) != 0) {
+    check(errno == EEXIST, "Could not create directory %s", new_dir);
+    debug("%s already exists", new_dir);
   } else {
-    debug("%s created", tmp_root);
+    debug("%s created", new_dir);
   }
 
   free(tmp_dir);
-  return tmp_root;
+  return new_dir;
 error:
   exit(EXIT_FAILURE);
 }
