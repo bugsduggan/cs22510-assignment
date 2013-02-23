@@ -4,11 +4,14 @@
  * Tom Leaman (thl5@aber.ac.uk)
  */
 
+#include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#include "dbg.h"
 
 /*
  * This function was taken from
@@ -34,19 +37,25 @@ char* make_event_dir(const char* root_dir, const char* event_name) {
    * first, we're going to sanitize the event name by turning all the spaces into
    * underscores and lower casing the whole thing
    */
-  tmp_dir = strdup(event_name);
-  for (i = 0; tmp_dir[i]; i++) {
-    if (tmp_dir[i] == ' ') tmp_dir[i] = '_';
-    else tmp_dir[i] = tolower(tmp_dir[i]);
+  if (event_name) {
+    tmp_dir = strdup(event_name);
+    for (i = 0; tmp_dir[i]; i++) {
+      if (tmp_dir[i] == ' ') tmp_dir[i] = '_';
+      else tmp_dir[i] = tolower(tmp_dir[i]);
+    }
   }
 
-  /* grab enough memory to contain the whole path */
-  /* that is, length(root) + length(dir) + '/' + null */
-  new_dir = malloc(sizeof(char) * (strlen(root_dir) + strlen(tmp_dir) + 2));
-  check_mem(new_dir);
-  strcpy(new_dir, root_dir);
-  strcat(new_dir, tmp_dir);
-  strcat(new_dir, "/");
+  if (event_name) {
+    /* grab enough memory to contain the whole path */
+    /* that is, length(root) + length(dir) + '/' + null */
+    new_dir = malloc(sizeof(char) * (strlen(root_dir) + strlen(tmp_dir) + 2));
+    check_mem(new_dir);
+    strcpy(new_dir, root_dir);
+    strcat(new_dir, tmp_dir);
+    strcat(new_dir, "/");
+  } else {
+    new_dir = strdup(root_dir);
+  }
 
   /*
    * then we're going to either create the directory or establish that it already
@@ -59,7 +68,7 @@ char* make_event_dir(const char* root_dir, const char* event_name) {
     debug("%s created", new_dir);
   }
 
-  free(tmp_dir);
+  if (tmp_dir) free(tmp_dir);
   return new_dir;
 error:
   exit(EXIT_FAILURE);

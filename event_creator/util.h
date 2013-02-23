@@ -32,6 +32,8 @@ char* strdup(const char* str);
  *
  * root_dir should end with a trailing slash
  *
+ * passing NULL as the second arg will just create a directory specified by root
+ *
  * e.g.
  * make_event_dir("./resources/", "The Big Race");
  * will create a directory at
