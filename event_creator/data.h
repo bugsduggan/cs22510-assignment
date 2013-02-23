@@ -40,7 +40,7 @@ typedef struct Course {
 
 Course* Course_new(const char id);
 void Course_destroy(Course* course);
-void Course_add_node(Course* course, const int node_id);
+void Course_add_node(Course* course, int node_id);
 int Course_write(Course* course, const char* filename);
 
 #endif
