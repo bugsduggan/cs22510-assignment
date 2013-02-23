@@ -11,6 +11,15 @@
 #ifndef UTIL_THL_H
 #define UTIL_THL_H
 
+#define MAX_LINE_LENGTH 80
+
+/*
+ * Some constants relating to filenames
+ */
+static const char EVENT_FILENAME[] = "name.txt";
+static const char COMPETITOR_FILENAME[] = "entrants.txt";
+static const char COURSE_FILENAME[] = "courses.txt";
+
 /*
  * 'Borrowed' functions
  */
@@ -41,5 +50,7 @@ char* strdup(const char* str);
  * and return the path to that dir including the trailing slash
  */
 char* make_event_dir(const char* root_dir, const char* event_name);
+
+Vector* find_events(const char* root);
 
 #endif

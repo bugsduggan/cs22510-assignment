@@ -5,13 +5,17 @@
  */
 
 #include <ctype.h>
+#include <dirent.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 
+#include "data.h"
 #include "dbg.h"
+#include "util.h"
+#include "vector.h"
 
 /*
  * This function was taken from
@@ -71,6 +75,154 @@ char* make_event_dir(const char* root_dir, const char* event_name) {
   if (event_name) free(tmp_dir); /* this looks a little clunky but if there's no
                                     event name, there's no tmp_dir */
   return new_dir;
+error:
+  exit(EXIT_FAILURE);
+}
+
+void dispose_event(void* event_ptr) {
+  Event* event = *(Event**) event_ptr;
+  Event_destroy(event);
+}
+
+void dispose_str(void* str_ptr) {
+  char* str = *(char**) str_ptr;
+  if (str) free(str);
+}
+
+/*
+ * This function was pinched from http://ragingbit.com/blog/list-dirs-c.html
+ */
+int filter(const struct dirent * dire){
+
+  /* Discard . and .. */
+  if( strncmp(dire->d_name, ".", 2) == 0
+      || strncmp(dire->d_name, "..", 3) == 0 )
+    return 0;
+
+  /* Check whether it is a DIR or not.
+   * Some FS doesn't handle d_type, so we check UNKNOWN as well */
+  if( dire->d_type != DT_UNKNOWN
+      && dire->d_type != DT_DIR )
+    return 0;
+
+  /* We've nothing against it. Accept */
+  return 1;
+}
+
+/*
+ * This function makes use of ideas from
+ * http://ragingbit.com/blog/list-dirs-c.html
+ */
+Vector* find_dirs(const char* root) {
+  int i;
+  struct dirent** filelist = NULL;
+  int ndirs = scandir(root, &filelist, filter, alphasort);
+  char* dname;
+  Vector* dirs = Vector_new(sizeof(char**), dispose_str);
+
+  check(ndirs >= 0, "Failed to read data from %s", root);
+
+  for (i = 0; i < ndirs; i++) {
+    dname = strdup(filelist[i]->d_name);
+    Vector_add(dirs, &dname);
+  }
+
+  /* clean up */
+  if (filelist) {
+    for (i = 0; i < ndirs; i++) {
+      free(filelist[i]);
+    }
+    free(filelist);
+  }
+
+  debug("Found %i directories:", Vector_size(dirs));
+
+  return dirs;
+error:
+  exit(EXIT_FAILURE);
+}
+
+/* this reads a whole file into a vector */
+Vector* read_file(char* filename) {
+  char line[MAX_LINE_LENGTH];
+  char* str;
+  FILE* fp;
+  Vector* lines = Vector_new(sizeof(char**), dispose_str);
+
+  fp = fopen(filename, "r");
+  while (fgets(line, MAX_LINE_LENGTH, fp) != NULL) {
+    strtok(line, "\n");      /* strip newline */
+    str = strdup(line);      /* make a new pointer */
+    Vector_add(lines, &str); /* pass it to the vector */
+  }
+  fclose(fp);
+
+  return lines;
+}
+
+/* check that a filename is valid (1 = true, 0 = false) */
+int valid_filename(char* filename) {
+  FILE* fp;
+  int ret_val = 0;
+
+  fp = fopen(filename, "r");
+  if (fp) {
+    ret_val = 1;
+    fclose(fp);
+  }
+
+  return ret_val;
+}
+
+Vector* find_events(const char* root) {
+  Vector* dirs = find_dirs(root);
+  Vector* events = Vector_new(sizeof(Event*), dispose_event);
+  Event* event;
+  char* dirname;
+  char* path;
+  char* token;
+  char* line;
+  int i;
+
+  for (i = 0; i < Vector_size(dirs); i++) {
+    Vector_get(dirs, 0, &dirname);
+    /* +2 for slash & null */
+    path = malloc(sizeof(char) * (strlen(root) + strlen(dirname) + 2) +
+        sizeof(EVENT_FILENAME));
+    check_mem(path);
+    strcpy(path, root);
+    strcat(path, dirname);
+    strcat(path, "/");
+    strcat(path, EVENT_FILENAME);
+
+    if (valid_filename(path)) {
+      Vector* lines = read_file(path);
+      event = malloc(sizeof(Event));
+      check_mem(event);
+
+      Vector_get(lines, 0, &line);
+      token = strtok(line, "\n");
+      event->name = strdup(token);
+
+      Vector_get(lines, 1, &line);
+      token = strtok(line, "\n");
+      event->date = strdup(token);
+
+      Vector_get(lines, 2, &line);
+      token = strtok(line, ":");
+      event->start_hrs = atoi(token);
+      token = strtok(NULL, "\n");
+      event->start_mins = atoi(token);
+
+      Vector_add(events, &event);
+      Vector_dispose(lines);
+    }
+
+    free(path);
+  }
+  Vector_dispose(dirs);
+
+  return events;
 error:
   exit(EXIT_FAILURE);
 }
