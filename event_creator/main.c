@@ -85,10 +85,36 @@ Event* create_event(const char* root) {
   return event;
 }
 
-void print_menu() {
+Event* load_event(Event* current, Vector* events) {
+  Event* result = current;
+  Event* event;
+  int input;
+  int i;
+
+  /* show options */
+  printf("\nEvents:\n");
+  for (i = 0; i < Vector_size(events); i++) {
+    Vector_get(events, i, &event);
+    printf("\t%d - %s\n", (i+1), event->name);
+  }
   printf("\n");
-  printf("Main menu\n");
+
+  /* process selection */
+  input = prompt_int();
+  if (input < 0 || input > Vector_size(events)) {
+    printf("\nSelection out of range\n");
+  } else {
+    Vector_get(events, (input-1), &result);
+  }
+
+  return result;
+}
+
+void print_menu(Event* current) {
   printf("\n");
+  printf("Main menu");
+  if (current) printf(" - %s", current->name);
+  printf("\n\n");
   printf("\t1. Create event\n");
   printf("\t2. Load event\n");
   printf("\t3. Add competitor\n");
@@ -100,6 +126,7 @@ void print_menu() {
 int main(int argc, char* argv[]) {
   char* root;
   Event* event;
+  Event* current = NULL;
   Vector* events;
   int running = 1;
   int input;
@@ -124,16 +151,22 @@ int main(int argc, char* argv[]) {
 
   /* main loop */
   while (running) {
-    print_menu();
+    print_menu(current);
     input = prompt_int();
     switch(input) {
       case 1:
         /* create event */
         event = create_event(root);
-        Vector_add(events, event);
+        current = event;
+        Vector_add(events, &event);
         break;
       case 2:
         /* load event */
+        if (Vector_size(events) < 1) {
+          printf("No events in %s!\n", root);
+        } else {
+          current = load_event(current, events);
+        }
         break;
       case 3:
         /* add competitor */
