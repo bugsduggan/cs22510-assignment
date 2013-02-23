@@ -1,3 +1,9 @@
 CFLAGS=-g -Wall -std=c89
 
-main: util.o
+main: event.o util.o vector.o
+
+clean:
+	rm -f event.o
+	rm -f util.o
+	rm -f vector.o
+	rm -f main
