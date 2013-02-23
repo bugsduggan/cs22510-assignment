@@ -116,9 +116,10 @@ int main(int argc, char* argv[]) {
   debug("Root path set to %s", root);
   root = make_event_dir(root, NULL);
   events = find_events(root);
+  debug("Found %d events:", Vector_size(events));
   for (i = 0; i < Vector_size(events); i++) {
     Vector_get(events, i, &event);
-    debug("Found event: %s", event->name);
+    debug("\t%s", event->name);
   }
 
   /* main loop */

@@ -159,8 +159,6 @@ Vector* find_dirs(const char* root) {
     free(filelist);
   }
 
-  debug("Found %d directories:", Vector_size(dirs));
-
   return dirs;
 error:
   exit(EXIT_FAILURE);
@@ -209,7 +207,7 @@ Vector* find_events(const char* root) {
   int i;
 
   for (i = 0; i < Vector_size(dirs); i++) {
-    Vector_get(dirs, 0, &dirname);
+    Vector_get(dirs, i, &dirname);
     /* +2 for slash & null */
     path = malloc(sizeof(char) * (strlen(root) + strlen(dirname) + 2) +
         sizeof(EVENT_FILENAME));
