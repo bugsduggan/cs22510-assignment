@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "dbg.h"
 #include "vector.h"
 
 /*
@@ -43,6 +44,7 @@ static void Vector_grow(Vector* vector) {
 /* create a new vector object */
 Vector* Vector_new(int elem_size, void (*dispose_fn)(void*)) {
   Vector* vector = malloc(sizeof(Vector));
+  check_mem(vector);
 
   vector->elem_size = elem_size;
   vector->dispose_fn = dispose_fn;
