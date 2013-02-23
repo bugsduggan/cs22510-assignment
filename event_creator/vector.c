@@ -53,6 +53,8 @@ Vector* Vector_new(int elem_size, void (*dispose_fn)(void*)) {
   vector->base = malloc(vector->elem_size * vector->capacity);
 
   return vector;
+error:
+  exit(EXIT_FAILURE);
 }
 
 /* dispose of the vector */
