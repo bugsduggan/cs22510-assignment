@@ -50,6 +50,7 @@ int prompt_int() {
   line = prompt();
   token = strtok(line, "\n");
   result = atoi(token);
+  free(line);
 
   return result;
 }
