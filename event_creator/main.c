@@ -61,15 +61,22 @@ Event* create_event(const char* root) {
   Event* event = Event_new();
 
   printf("Please enter event name\n");
-  event->name = prompt();
+  line = prompt();
+  event->name = strdup(line);
+  free(line);
+
   printf("Please enter event date\n");
-  event->date = prompt();
+  line = prompt();
+  event->date = strdup(line);
+  free(line);
+
   printf("Please enter event time\n");
   line = prompt();
   token = strtok(line, ":");
   event->start_hrs = atoi(token);
   token = strtok(NULL, "\n");
   event->start_mins = atoi(token);
+  free(line);
 
   path = make_event_dir(root, event->name);
   Event_write(event, path);
