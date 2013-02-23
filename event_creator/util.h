@@ -51,6 +51,12 @@ char* readline();
  */
 char* make_event_dir(const char* root_dir, const char* event_name);
 
+Vector* read_file(const char* path);
+
+int valid_filename(const char* filename);
+
 Vector* find_events(const char* root);
+
+int write_competitor(const char* path, const int id, const char course, const char* name);
 
 #endif

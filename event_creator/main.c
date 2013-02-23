@@ -110,6 +110,46 @@ Event* load_event(Event* current, Vector* events) {
   return result;
 }
 
+void add_competitor(Event* current, const char* root) {
+  char* path = make_event_dir(root, current->name);
+  char* full_path;
+  Vector* lines;
+  char* line;
+  char* token;
+  char* name;
+  char* course_id;
+  int next_id;
+
+  full_path = malloc(sizeof(char) * (strlen(path) + 1) +
+      sizeof(COMPETITOR_FILENAME));
+  check_mem(full_path);
+  strcpy(full_path, path);
+  strcat(full_path, COMPETITOR_FILENAME);
+
+  if (valid_filename(full_path)) {
+    /* file exists, we need to find the next comp_id */
+    lines = read_file(full_path);
+    Vector_get(lines, Vector_size(lines) - 1, &line);
+    token = strtok(line, " ");
+    next_id = atoi(token) + 1;
+    Vector_dispose(lines);
+  } else {
+    next_id = 1;
+  }
+
+  /* then grab course and name from user */
+  printf("Please enter competitor name\n");
+  name = readline();
+  printf("Please enter course id\n");
+  course_id = readline();
+
+  write_competitor(full_path, next_id, course_id[0], name);
+
+  return;
+error:
+  exit(EXIT_FAILURE);
+}
+
 void print_menu(Event* current) {
   printf("\n");
   printf("Main menu");
@@ -170,6 +210,11 @@ int main(int argc, char* argv[]) {
         break;
       case 3:
         /* add competitor */
+        if (current) {
+          add_competitor(current, root);
+        } else {
+          printf("No event selected!\n");
+        }
         break;
       case 4:
         /* add course */

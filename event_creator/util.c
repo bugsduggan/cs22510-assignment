@@ -165,7 +165,7 @@ error:
 }
 
 /* this reads a whole file into a vector */
-Vector* read_file(char* filename) {
+Vector* read_file(const char* filename) {
   char line[MAX_LINE_LENGTH];
   char* str;
   FILE* fp;
@@ -183,7 +183,7 @@ Vector* read_file(char* filename) {
 }
 
 /* check that a filename is valid (1 = true, 0 = false) */
-int valid_filename(char* filename) {
+int valid_filename(const char* filename) {
   FILE* fp;
   int ret_val = 0;
 
@@ -245,6 +245,19 @@ Vector* find_events(const char* root) {
   Vector_dispose(dirs);
 
   return events;
+error:
+  exit(EXIT_FAILURE);
+}
+
+int write_competitor(const char* path, const int id, const char course, const char* name) {
+  FILE* fp;
+
+  fp = fopen(path, "a");
+  check(fp != NULL, "Could not open %s for writing", path);
+  fprintf(fp, "%d %c %s\n", id, course, name);
+  fclose(fp);
+
+  return 0;
 error:
   exit(EXIT_FAILURE);
 }

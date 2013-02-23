@@ -22,16 +22,6 @@ Event* Event_new();
 void Event_destroy(Event* event);
 int Event_write(Event* event, const char* root);
 
-typedef struct Competitor {
-  int id;
-  char course_id;
-  char* name;
-} Competitor;
-
-Competitor* Competitor_new(const int id, const char course_id, const char* name);
-void Competitor_destroy(Competitor* competitor);
-int Competitor_write(Competitor* competitor, const char* path, const char* filename);
-
 typedef struct Course {
   char id;
   int num_nodes;
