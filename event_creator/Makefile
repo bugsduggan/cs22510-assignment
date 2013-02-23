@@ -1,4 +1,4 @@
-CFLAGS=-g -Wall -std=c89
+CFLAGS=-g -Wall
 
 main: event.o util.o vector.o
 
