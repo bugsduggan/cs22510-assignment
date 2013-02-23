@@ -150,6 +150,47 @@ error:
   exit(EXIT_FAILURE);
 }
 
+void add_course(Event* current, const char* root) {
+  char* path = make_event_dir(root, current->name);
+  char* full_path;
+  char* course_id;
+  char* line;
+  char* token;
+  Vector* nodes = Vector_new(sizeof(int), NULL);
+  int node_id;
+  int num_nodes;
+  int i;
+
+  full_path = malloc(sizeof(char) * (strlen(path) + 1) +
+      sizeof(COURSE_FILENAME));
+  check_mem(full_path);
+  strcpy(full_path, path);
+  strcat(full_path, COURSE_FILENAME);
+
+  printf("Please enter course id\n");
+  course_id = readline();
+  printf("Please enter the number of nodes in the course\n");
+  line = readline();
+  token = strtok(line, "\n");
+  num_nodes = atoi(token);
+  free(line);
+  /* now we read in the node ids */
+  for (i = 0; i < num_nodes; i++) {
+    printf("Please enter node id for node #%d\n", i+1);
+    line = readline();
+    token = strtok(line, "\n");
+    node_id = atoi(token);
+    Vector_add(nodes, &node_id);
+    free(line);
+  }
+
+  write_course(full_path, course_id[0], num_nodes, nodes);
+
+  return;
+error:
+  exit(EXIT_FAILURE);
+}
+
 void print_menu(Event* current) {
   printf("\n");
   printf("Main menu");
@@ -218,6 +259,11 @@ int main(int argc, char* argv[]) {
         break;
       case 4:
         /* add course */
+        if (current) {
+          add_course(current, root);
+        } else {
+          printf("No event selected!\n");
+        }
         break;
       case 5:
         /* quit */

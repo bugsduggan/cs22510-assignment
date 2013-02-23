@@ -58,5 +58,6 @@ int valid_filename(const char* filename);
 Vector* find_events(const char* root);
 
 int write_competitor(const char* path, const int id, const char course, const char* name);
+int write_course(const char* path, const char id, const int num_nodes, Vector* nodes);
 
 #endif

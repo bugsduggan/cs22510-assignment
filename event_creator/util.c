@@ -261,3 +261,23 @@ int write_competitor(const char* path, const int id, const char course, const ch
 error:
   exit(EXIT_FAILURE);
 }
+
+int write_course(const char* path, const char id, const int num_nodes, Vector* nodes) {
+  FILE* fp;
+  int i;
+  int node;
+
+  fp = fopen(path, "a");
+  check(fp != NULL, "Could not open %s for writing", path);
+  fprintf(fp, "%c %d", id, num_nodes);
+  for (i = 0; i < Vector_size(nodes); i++) {
+    Vector_get(nodes, i, &node);
+    fprintf(fp, " %d", node);
+  }
+  fprintf(fp, "\n");
+  fclose(fp);
+
+  return 0;
+error:
+  exit(EXIT_FAILURE);
+}
