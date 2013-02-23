@@ -68,7 +68,8 @@ char* make_event_dir(const char* root_dir, const char* event_name) {
     debug("%s created", new_dir);
   }
 
-  if (tmp_dir) free(tmp_dir);
+  if (event_name) free(tmp_dir); /* this looks a little clunky but if there's no
+                                    event name, there's no tmp_dir */
   return new_dir;
 error:
   exit(EXIT_FAILURE);
