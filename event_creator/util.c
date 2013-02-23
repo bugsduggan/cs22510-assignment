@@ -159,7 +159,7 @@ Vector* find_dirs(const char* root) {
     free(filelist);
   }
 
-  debug("Found %i directories:", Vector_size(dirs));
+  debug("Found %d directories:", Vector_size(dirs));
 
   return dirs;
 error:

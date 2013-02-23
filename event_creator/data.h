@@ -18,9 +18,9 @@ typedef struct Event {
   int start_mins;
 } Event;
 
-Event* Event_new(const char* name, const char* date, const int hrs, const int mins);
+Event* Event_new();
 void Event_destroy(Event* event);
-int Event_write(Event* event, const char* path, const char* filename);
+int Event_write(Event* event, const char* root);
 
 typedef struct Competitor {
   int id;

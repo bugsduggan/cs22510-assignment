@@ -11,14 +11,14 @@
 #include "dbg.h"
 #include "util.h"
 
-Event* Event_new(const char* name, const char* date, const int hrs, const int mins) {
+Event* Event_new() {
   Event* event = malloc(sizeof(Event));
   check_mem(event);
 
-  event->name = strdup(name);
-  event->date = strdup(date);
-  event->start_hrs = hrs;
-  event->start_mins = mins;
+  event->name = NULL;
+  event->date = NULL;
+  event->start_hrs = 0;
+  event->start_mins = 0;
 
   return event;
 error:
@@ -33,23 +33,24 @@ void Event_destroy(Event* event) {
   }
 }
 
-int Event_write(Event* event, const char* path, const char* filename) {
-  char* full_path;
+int Event_write(Event* event, const char* root) {
+  char* file_path;
   FILE* fp;
 
-  full_path = malloc(sizeof(char) * (strlen(path) + strlen(filename) + 1));
-  check_mem(full_path);
-  strcpy(full_path, path);
-  strcat(full_path, filename);
+  file_path = malloc(sizeof(char) * (strlen(root) + 1) +
+      sizeof(EVENT_FILENAME));
+  check_mem(file_path);
+  strcpy(file_path, root);
+  strcat(file_path, EVENT_FILENAME);
 
-  fp = fopen(full_path, "w");
-  check(fp != NULL, "Could not open %s for writing", filename);
+  fp = fopen(file_path, "w");
+  check(fp != NULL, "Could not open %s for writing", file_path);
   fprintf(fp, "%s\n", event->name);
   fprintf(fp, "%s\n", event->date);
-  fprintf(fp, "%i:%i\n", event->start_hrs, event->start_mins);
+  fprintf(fp, "%02d:%02d\n", event->start_hrs, event->start_mins);
   fclose(fp);
 
-  free(full_path);
+  free(file_path);
   return 0;
 error:
   exit(EXIT_FAILURE);

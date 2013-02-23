@@ -54,6 +54,29 @@ int prompt_int() {
   return result;
 }
 
+Event* create_event(const char* root) {
+  char* line;
+  char* token;
+  char* path;
+  Event* event = Event_new();
+
+  printf("Please enter event name\n");
+  event->name = prompt();
+  printf("Please enter event date\n");
+  event->date = prompt();
+  printf("Please enter event time\n");
+  line = prompt();
+  token = strtok(line, ":");
+  event->start_hrs = atoi(token);
+  token = strtok(NULL, "\n");
+  event->start_mins = atoi(token);
+
+  path = make_event_dir(root, event->name);
+  Event_write(event, path);
+
+  return event;
+}
+
 void print_menu() {
   printf("\n");
   printf("Main menu\n");
@@ -97,6 +120,8 @@ int main(int argc, char* argv[]) {
     switch(input) {
       case 1:
         /* create event */
+        event = create_event(root);
+        Vector_add(events, event);
         break;
       case 2:
         /* load event */
@@ -119,7 +144,7 @@ int main(int argc, char* argv[]) {
 
   /* clean up */
   debug("Cleaning resources");
-  free(root);
+  if (root) free(root);
   Vector_dispose(events);
 
   return EXIT_SUCCESS;
