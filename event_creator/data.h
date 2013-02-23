@@ -20,7 +20,7 @@ typedef struct Event {
 
 Event* Event_new(const char* name, const char* date, const int hrs, const int mins);
 void Event_destroy(Event* event);
-int Event_write(Event* event, const char* filename);
+int Event_write(Event* event, const char* path, const char* filename);
 
 typedef struct Competitor {
   int id;
@@ -30,7 +30,7 @@ typedef struct Competitor {
 
 Competitor* Competitor_new(const int id, const char course_id, const char* name);
 void Competitor_destroy(Competitor* competitor);
-int Competitor_write(Competitor* competitor, const char* filename);
+int Competitor_write(Competitor* competitor, const char* path, const char* filename);
 
 typedef struct Course {
   char id;
@@ -41,6 +41,6 @@ typedef struct Course {
 Course* Course_new(const char id);
 void Course_destroy(Course* course);
 void Course_add_node(Course* course, int node_id);
-int Course_write(Course* course, const char* filename);
+int Course_write(Course* course, const char* path, const char* filename);
 
 #endif

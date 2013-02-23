@@ -33,16 +33,23 @@ void Event_destroy(Event* event) {
   }
 }
 
-int Event_write(Event* event, const char* filename) {
+int Event_write(Event* event, const char* path, const char* filename) {
+  char* full_path;
   FILE* fp;
 
-  fp = fopen(filename, "w");
+  full_path = malloc(sizeof(char) * (strlen(path) + strlen(filename) + 1));
+  check_mem(full_path);
+  strcpy(full_path, path);
+  strcat(full_path, filename);
+
+  fp = fopen(full_path, "w");
   check(fp != NULL, "Could not open %s for writing", filename);
   fprintf(fp, "%s\n", event->name);
   fprintf(fp, "%s\n", event->date);
   fprintf(fp, "%i:%i\n", event->start_hrs, event->start_mins);
   fclose(fp);
 
+  free(full_path);
   return 0;
 error:
   exit(EXIT_FAILURE);

@@ -35,12 +35,18 @@ void Course_add_node(Course* course, int node_id) {
   Vector_add(course->nodes, &node_id);
 }
 
-int Course_write(Course* course, const char* filename) {
+int Course_write(Course* course, const char* path, const char* filename) {
+  char* full_path;
   FILE* fp;
   int node;
   int i;
 
-  fp = fopen(filename, "a");
+  full_path = malloc(sizeof(char) * (strlen(path) + strlen(filename) + 1));
+  check_mem(full_path);
+  strcpy(full_path, path);
+  strcat(full_path, filename);
+
+  fp = fopen(full_path, "a");
   check(fp != NULL, "Could not open %s for writing", filename);
   fprintf(fp, "%c %i", course->id, course->num_nodes);
   for (i = 0; i < course->num_nodes; i++) {
@@ -50,6 +56,7 @@ int Course_write(Course* course, const char* filename) {
   fprintf(fp, "\n");
   fclose(fp);
 
+  free(full_path);
   return 0;
 error:
   exit(EXIT_FAILURE);

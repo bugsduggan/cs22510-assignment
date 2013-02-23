@@ -31,14 +31,21 @@ void Competitor_destroy(Competitor* competitor) {
   }
 }
 
-int Competitor_write(Competitor* competitor, const char* filename) {
+int Competitor_write(Competitor* competitor, const char* path, const char* filename) {
+  char* full_path;
   FILE* fp;
 
-  fp = fopen(filename, "a");
+  full_path = malloc(sizeof(char) * (strlen(path) + strlen(filename) + 1));
+  check_mem(full_path);
+  strcpy(full_path, path);
+  strcat(full_path, filename);
+
+  fp = fopen(full_path, "a");
   check(fp != NULL, "Could not open %s for writing", filename);
   fprintf(fp, "%i %c %s\n", competitor->id, competitor->course_id, competitor->name);
   fclose(fp);
 
+  free(full_path);
   return 0;
 error:
   exit(EXIT_FAILURE);
