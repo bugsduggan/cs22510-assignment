@@ -22,15 +22,4 @@ Event* Event_new();
 void Event_destroy(Event* event);
 int Event_write(Event* event, const char* root);
 
-typedef struct Course {
-  char id;
-  int num_nodes;
-  Vector* nodes;
-} Course;
-
-Course* Course_new(const char id);
-void Course_destroy(Course* course);
-void Course_add_node(Course* course, int node_id);
-int Course_write(Course* course, const char* path, const char* filename);
-
 #endif
