@@ -20,6 +20,15 @@ public class Event {
     for (Entrant e : entrants) addEntrant(e);
   }
 
+  public void update(char type, Node node, int entrantId, int tHours, int tMins) {
+    // type may be:
+    // T - normal time check
+    // A - arrival at medical checkpoint
+    // D - departure from medical checkpoint
+    // I - invalid route
+    // E - excluded for safety
+  }
+
   private void addEntrant(Entrant e) {
     entrants.add(e);
   }
