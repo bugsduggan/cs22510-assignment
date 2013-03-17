@@ -2,23 +2,23 @@ package event;
 
 public class Track {
 
-  private char id;
+  private int id;
   private Node start;
   private Node end;
   private int safeTime;
   
-  public Track(char id, Node start, Node end, int safeTime) {
+  public Track(int id, Node start, Node end, int safeTime) {
     setId(id);
     setStartNode(start);
     setEndNode(end);
     setSafeTime(safeTime);
   }
   
-  public char getId() {
+  public int getId() {
     return id;
   }
   
-  private void setId(char id) {
+  private void setId(int id) {
     this.id = id;
   }
   
