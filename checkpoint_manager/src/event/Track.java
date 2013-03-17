@@ -13,5 +13,13 @@ public class Track {
     this.end = end;
     this.safeTime = safeTime;
   }
+
+  public Node getStartNode() {
+    return start;
+  }
+  
+  public Node getEndNode() {
+    return end;
+  }
   
 }

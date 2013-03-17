@@ -4,10 +4,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import event.Course;
+import event.CourseList;
+import event.Entrant;
 import event.Event;
 import event.Node;
 import event.NodeList;
 import event.Track;
+import event.TrackList;
 
 import util.FileIO;
 import util.Parser;
@@ -33,7 +37,9 @@ public class Driver {
       Event event = new Event(name, c);
       
       NodeList nodes = Parser.parseNodes(nodesFile);
-      List<Track> tracks = Parser.parseTracks(tracksFile, nodes);
+      TrackList tracks = Parser.parseTracks(tracksFile, nodes);
+      CourseList courses = Parser.parseCourses(coursesFile, nodes, tracks);
+      List<Entrant> entrants = Parser.parseEntrants(entrantsFile, courses);
     }
   }
   

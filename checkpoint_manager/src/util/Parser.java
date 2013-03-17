@@ -5,11 +5,15 @@ import java.util.Calendar;
 import java.util.List;
 
 import event.Checkpoint;
+import event.Course;
+import event.CourseList;
+import event.Entrant;
 import event.Junction;
 import event.MedicalCheckpoint;
 import event.Node;
 import event.NodeList;
 import event.Track;
+import event.TrackList;
 
 public class Parser {
 
@@ -100,8 +104,8 @@ public class Parser {
     return nodes;
   }
 
-  public static List<Track> parseTracks(String tracksFile, NodeList nodes) {
-    List<Track> tracks = new ArrayList<Track>();
+  public static TrackList parseTracks(String tracksFile, NodeList nodes) {
+    TrackList tracks = new TrackList();
     List<String> lines = FileIO.readLines(tracksFile);
     
     for (String line : lines) {
@@ -114,6 +118,36 @@ public class Parser {
     }
     
     return tracks;
+  }
+
+  public static CourseList parseCourses(String coursesFile, NodeList nodes, TrackList tracks) {
+    CourseList courses = new CourseList();
+    List<String> lines = FileIO.readLines(coursesFile);
+    
+    for (String line : lines) {
+      String[] tokens = line.split(" ");
+      char id = tokens[0].charAt(0); // should be 1 char
+      int numNodes = Integer.parseInt(tokens[1]);
+      List<Track> courseTracks = new ArrayList<Track>();
+      for (int i = 2; i < tokens.length - 1; i++) {
+        int startId = Integer.parseInt(tokens[i]);
+        int endId = Integer.parseInt(tokens[i+1]);
+        Node start = nodes.getNodeById(startId);
+        Node end = nodes.getNodeById(endId);
+        courseTracks.add(tracks.getTrackFromNodes(start, end));
+      }
+      courses.add(new Course(id, numNodes, courseTracks));
+    }
+    
+    return courses;
+  }
+
+  public static List<Entrant> parseEntrants(String entrantsFile,
+      CourseList courses) {
+    List<Entrant> entrants = new ArrayList<Entrant>();
+    List<String> lines = FileIO.readLines(entrantsFile);
+    
+    return entrants;
   }
   
 }
