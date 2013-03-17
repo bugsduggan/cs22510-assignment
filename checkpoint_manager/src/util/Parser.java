@@ -6,6 +6,7 @@ import java.util.List;
 
 import event.CheckpointNode;
 import event.Course;
+import event.Entrant;
 import event.Event;
 import event.JunctionNode;
 import event.MedicalCheckpointNode;
@@ -148,6 +149,24 @@ public class Parser {
     }
     
     return courses;
+  }
+
+  public static List<Entrant> parseEntrants(String entrantsFile, Event event) {
+    List<Entrant> entrants = new ArrayList<Entrant>();
+    
+    for (String line : FileIO.readLines(entrantsFile)) {
+      String[] tokens = line.split(" ");
+      int id = Integer.parseInt(tokens[0]);
+      Course course = event.getCourse(tokens[1].charAt(0));
+      String name = new String();
+      for (int i = 2; i < tokens.length; i++) {
+        name = name + tokens[i] + " ";
+      }
+      name = name.substring(0, name.length() - 1);
+      entrants.add(new Entrant(id, course, name));
+    }
+    
+    return entrants;
   }
 
 }
