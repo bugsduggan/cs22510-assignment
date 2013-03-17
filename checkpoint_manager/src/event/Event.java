@@ -13,6 +13,7 @@ public class Event {
   private DateFormat df;
   
   private List<Node> nodes;
+  private List<Track> tracks;
   
   public Event(String name, Calendar date) {
     setName(name);
@@ -21,6 +22,7 @@ public class Event {
     df = new SimpleDateFormat("dddd-MMMM-yyyy");
     
     nodes = new ArrayList<Node>();
+    tracks = new ArrayList<Track>();
   }
   
   public String getName() {
@@ -52,6 +54,17 @@ public class Event {
   
   public void addNode(Node n) {
     nodes.add(n);
+  }
+  
+  public Track getTrack(char id) {
+    for (Track t : tracks) {
+      if (t.getId() == id) return t;
+    }
+    return null;
+  }
+  
+  public void addTrack(Track t) {
+    tracks.add(t);
   }
   
 }
