@@ -8,6 +8,8 @@ import event.Checkpoint;
 import event.Junction;
 import event.MedicalCheckpoint;
 import event.Node;
+import event.NodeList;
+import event.Track;
 
 public class Parser {
 
@@ -71,8 +73,8 @@ public class Parser {
     return c;
   }
 
-  public static List<Node> parseNodes(String nodesFile) {
-    List<Node> nodes = new ArrayList<Node>();
+  public static NodeList parseNodes(String nodesFile) {
+    NodeList nodes = new NodeList();
     List<String> lines = FileIO.readLines(nodesFile);
     
     for (String line : lines) {
@@ -96,6 +98,22 @@ public class Parser {
     }
     
     return nodes;
+  }
+
+  public static List<Track> parseTracks(String tracksFile, NodeList nodes) {
+    List<Track> tracks = new ArrayList<Track>();
+    List<String> lines = FileIO.readLines(tracksFile);
+    
+    for (String line : lines) {
+      String[] tokens = line.split(" ");
+      int id = Integer.parseInt(tokens[0]);
+      Node start = nodes.getNodeById(Integer.parseInt(tokens[1]));
+      Node end = nodes.getNodeById(Integer.parseInt(tokens[2]));
+      int safeTime = Integer.parseInt(tokens[3]);
+      tracks.add(new Track(id, start, end, safeTime));
+    }
+    
+    return tracks;
   }
   
 }
