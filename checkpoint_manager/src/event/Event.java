@@ -75,6 +75,10 @@ public class Event {
     tracks.add(t);
   }
   
+  public void addTracks(List<Track> tracks) {
+    this.tracks.addAll(tracks);
+  }
+  
   public Course getCourse(char id) {
     for (Course c : courses) {
       if (c.getId() == id) return c;

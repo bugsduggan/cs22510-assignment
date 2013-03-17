@@ -9,6 +9,7 @@ import event.Event;
 import event.JunctionNode;
 import event.MedicalCheckpointNode;
 import event.Node;
+import event.Track;
 
 public class Parser {
 
@@ -104,6 +105,21 @@ public class Parser {
     }
     
     return nodes;
+  }
+
+  public static List<Track> parseTracks(String tracksFile, Event event) {
+    List<Track> tracks = new ArrayList<Track>();
+    
+    for (String line : FileIO.readLines(tracksFile)) {
+      String[] tokens = line.split(" ");
+      int id = Integer.parseInt(tokens[0]);
+      Node start = event.getNode(Integer.parseInt(tokens[1]));
+      Node end = event.getNode(Integer.parseInt(tokens[2]));
+      int safeTime = Integer.parseInt(tokens[3]);
+      tracks.add(new Track(id, start, end, safeTime));
+    }
+    
+    return tracks;
   }
 
 }
