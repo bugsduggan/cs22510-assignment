@@ -147,6 +147,18 @@ public class Parser {
     List<Entrant> entrants = new ArrayList<Entrant>();
     List<String> lines = FileIO.readLines(entrantsFile);
     
+    for (String line : lines) {
+      String[] tokens = line.split(" ");
+      int id = Integer.parseInt(tokens[0]);
+      Course c = courses.getCourseById(tokens[1].charAt(0));
+      String name = "";
+      for (int i = 2; i < tokens.length; i++) {
+        name = name + tokens[i] + " ";
+      }
+      name = name.substring(0, name.length() - 1);
+      entrants.add(new Entrant(id, c, name));
+    }
+    
     return entrants;
   }
   

@@ -40,6 +40,12 @@ public class Driver {
       TrackList tracks = Parser.parseTracks(tracksFile, nodes);
       CourseList courses = Parser.parseCourses(coursesFile, nodes, tracks);
       List<Entrant> entrants = Parser.parseEntrants(entrantsFile, courses);
+      
+      event.addEntrants(entrants);
+      
+      // that's all the parsing done
+      // now start the gui
+      
     }
   }
   

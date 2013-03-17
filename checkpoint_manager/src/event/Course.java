@@ -14,4 +14,8 @@ public class Course {
     this.tracks = tracks;
   }
 
+  public char getId() {
+    return id;
+  }
+
 }

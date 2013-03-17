@@ -13,5 +13,12 @@ public class CourseList {
   public void add(Course c) {
     courses.add(c);
   }
+
+  public Course getCourseById(char id) {
+    for (Course c : courses) {
+      if (c.getId() == id) return c;
+    }
+    return null;
+  }
   
 }
