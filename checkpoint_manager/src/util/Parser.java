@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import event.CheckpointNode;
+import event.Course;
 import event.Event;
 import event.JunctionNode;
 import event.MedicalCheckpointNode;
@@ -120,6 +121,33 @@ public class Parser {
     }
     
     return tracks;
+  }
+
+  public static List<Course> parseCourses(String coursesFile, Event event) {
+    List<Course> courses = new ArrayList<Course>();
+    
+    for (String line : FileIO.readLines(coursesFile)) {
+      String[] tokens = line.split(" ");
+      char id = tokens[0].charAt(0); // should be 1 char
+      // we can ignore the next token unless we want to check the
+      // number of nodes
+      
+      List<Node> courseNodes = new ArrayList<Node>();
+      List<Track> courseTracks = new ArrayList<Track>();
+      // add the first node
+      courseNodes.add(event.getNode(Integer.parseInt(tokens[2])));
+      // then loop through and add nodes and tracks as needed
+      for (int i = 2; i < tokens.length - 1; i++) {
+        Node start = event.getNode(Integer.parseInt(tokens[i]));
+        Node end = event.getNode(Integer.parseInt(tokens[i+1]));
+        courseTracks.add(event.getTrack(start, end));
+        courseNodes.add(end);
+      }
+      
+      courses.add(new Course(id, courseNodes, courseTracks));
+    }
+    
+    return courses;
   }
 
 }

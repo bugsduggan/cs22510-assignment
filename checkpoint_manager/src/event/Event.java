@@ -71,6 +71,15 @@ public class Event {
     return null;
   }
   
+  public Track getTrack(Node start, Node end) {
+    for (Track t : tracks) {
+      if (t.getStartNode() == start && t.getEndNode() == end ||
+          t.getStartNode() == end && t.getEndNode() == start)
+        return t;
+    }
+    return null;
+  }
+  
   public void addTrack(Track t) {
     tracks.add(t);
   }
