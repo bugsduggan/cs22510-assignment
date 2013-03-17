@@ -14,6 +14,7 @@ public class Event {
   
   private List<Node> nodes;
   private List<Track> tracks;
+  private List<Course> courses;
   
   public Event(String name, Calendar date) {
     setName(name);
@@ -23,6 +24,7 @@ public class Event {
     
     nodes = new ArrayList<Node>();
     tracks = new ArrayList<Track>();
+    courses = new ArrayList<Course>();
   }
   
   public String getName() {
@@ -56,7 +58,7 @@ public class Event {
     nodes.add(n);
   }
   
-  public Track getTrack(char id) {
+  public Track getTrack(int id) {
     for (Track t : tracks) {
       if (t.getId() == id) return t;
     }
@@ -65,6 +67,17 @@ public class Event {
   
   public void addTrack(Track t) {
     tracks.add(t);
+  }
+  
+  public Course getCourse(char id) {
+    for (Course c : courses) {
+      if (c.getId() == id) return c;
+    }
+    return null;
+  }
+  
+  public void addCourse(Course c) {
+    courses.add(c);
   }
   
 }
