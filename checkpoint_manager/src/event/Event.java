@@ -117,5 +117,28 @@ public class Event {
   public void addEntrants(List<Entrant> entrants) {
     this.entrants.addAll(entrants);
   }
+
+  public void applyUpdate(UpdateEvent evt) {
+    switch (evt.getType()) {
+      case 'T':
+        // TODO
+        break;
+      case 'A':
+        // TODO
+        break;
+      case 'D':
+        // TODO
+        break;
+      case 'I':
+        // TODO
+        break;
+      case 'E':
+        // TODO
+        break;
+      default:
+        System.err.println("Failed to parse update - possible data loss");
+        break;
+    }
+  }
   
 }

@@ -2,6 +2,7 @@ package gui;
 
 import util.Parser;
 import event.Event;
+import event.UpdateEvent;
 
 public class Driver {
 
@@ -26,6 +27,10 @@ public class Driver {
     event.addTracks(Parser.parseTracks(tracksFile, event));
     event.addCourses(Parser.parseCourses(coursesFile, event));
     event.addEntrants(Parser.parseEntrants(entrantsFile, event));
+    
+    for (UpdateEvent evt : Parser.parseTimes(timesFile, event)) {
+      event.applyUpdate(evt);
+    }
   }
   
 }

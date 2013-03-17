@@ -12,6 +12,7 @@ import event.JunctionNode;
 import event.MedicalCheckpointNode;
 import event.Node;
 import event.Track;
+import event.UpdateEvent;
 
 public class Parser {
 
@@ -167,6 +168,22 @@ public class Parser {
     }
     
     return entrants;
+  }
+  
+  public static List<UpdateEvent> parseTimes(String timesFile, Event event) {
+    List<UpdateEvent> updates = new ArrayList<UpdateEvent>();
+    
+    for (String line : FileIO.readLines(timesFile)) {
+      String[] tokens = line.split(" ");
+      char type = tokens[0].charAt(0);
+      Node node = event.getNode(Integer.parseInt(tokens[1]));
+      Entrant entrant = event.getEntrant(Integer.parseInt(tokens[2]));
+      int hrs = Integer.parseInt(tokens[3].split(":")[0]);
+      int mins = Integer.parseInt(tokens[3].split(":")[1]);
+      updates.add(new UpdateEvent(type, node, entrant, hrs, mins));
+    }
+    
+    return updates;
   }
 
 }
