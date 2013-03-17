@@ -15,6 +15,7 @@ public class Event {
   private List<Node> nodes;
   private List<Track> tracks;
   private List<Course> courses;
+  private List<Entrant> entrants;
   
   public Event(String name, Calendar date) {
     setName(name);
@@ -25,6 +26,7 @@ public class Event {
     nodes = new ArrayList<Node>();
     tracks = new ArrayList<Track>();
     courses = new ArrayList<Course>();
+    entrants = new ArrayList<Entrant>();
   }
   
   public String getName() {
@@ -78,6 +80,17 @@ public class Event {
   
   public void addCourse(Course c) {
     courses.add(c);
+  }
+  
+  public Entrant getEntrant(int id) {
+    for (Entrant e : entrants) {
+      if (e.getId() == id) return e;
+    }
+    return null;
+  }
+  
+  public void addEntrant(Entrant e) {
+    entrants.add(e);
   }
   
 }
