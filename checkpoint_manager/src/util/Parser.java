@@ -1,9 +1,14 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import event.CheckpointNode;
 import event.Event;
+import event.JunctionNode;
+import event.MedicalCheckpointNode;
+import event.Node;
 
 public class Parser {
 
@@ -73,6 +78,32 @@ public class Parser {
     date.set(Calendar.SECOND, 0);
     
     return new Event(name, date);
+  }
+
+  public static List<Node> parseNodes(String nodesFile) {
+    List<Node> nodes = new ArrayList<Node>();
+    
+    for (String line : FileIO.readLines(nodesFile)) {
+      String[] tokens = line.split(" ");
+      int id = Integer.parseInt(tokens[0]);
+      switch (tokens[1]) {
+        case "JN":
+          nodes.add(new JunctionNode(id));
+          break;
+        case "CP":
+          nodes.add(new CheckpointNode(id));
+          break;
+        case "MC":
+          nodes.add(new MedicalCheckpointNode(id));
+          break;
+        default:
+          System.err.println("Error parsing node type " + tokens[1]);
+          System.exit(1);
+          break;
+      }
+    }
+    
+    return nodes;
   }
 
 }

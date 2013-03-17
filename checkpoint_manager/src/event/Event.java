@@ -60,6 +60,10 @@ public class Event {
     nodes.add(n);
   }
   
+  public void addNodes(List<Node> nodes) {
+    this.nodes.addAll(nodes);
+  }
+  
   public Track getTrack(int id) {
     for (Track t : tracks) {
       if (t.getId() == id) return t;

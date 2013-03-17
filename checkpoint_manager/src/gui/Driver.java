@@ -22,6 +22,7 @@ public class Driver {
     String timesFile = args[5];
     
     Event event = Parser.parseEvent(eventFile);
+    event.addNodes(Parser.parseNodes(nodesFile));
   }
   
 }
