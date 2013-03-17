@@ -90,6 +90,10 @@ public class Event {
     courses.add(c);
   }
   
+  public void addCourses(List<Course> courses) {
+    this.courses.addAll(courses);
+  }
+  
   public Entrant getEntrant(int id) {
     for (Entrant e : entrants) {
       if (e.getId() == id) return e;
@@ -99,6 +103,10 @@ public class Event {
   
   public void addEntrant(Entrant e) {
     entrants.add(e);
+  }
+  
+  public void addEntrants(List<Entrant> entrants) {
+    this.entrants.addAll(entrants);
   }
   
 }
