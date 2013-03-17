@@ -25,6 +25,7 @@ public class Driver {
     event.addNodes(Parser.parseNodes(nodesFile));
     event.addTracks(Parser.parseTracks(tracksFile, event));
     event.addCourses(Parser.parseCourses(coursesFile, event));
+    event.addEntrants(Parser.parseEntrants(entrantsFile, event));
   }
   
 }
