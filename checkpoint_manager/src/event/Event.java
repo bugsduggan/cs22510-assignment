@@ -118,10 +118,4 @@ public class Event {
     this.entrants.addAll(entrants);
   }
 
-	public void update(Time time) {
-		for (Entrant e : entrants) {
-			e.update(time);
-		}
-	}
-
 }

@@ -7,8 +7,6 @@ public class Entrant {
   private String name;
 
 	private EntrantStatus status;
-	private Node lastNode;
-	private Track currentTrack;
   
   public Entrant(int id, Course course, String name) {
     setId(id);
@@ -16,8 +14,6 @@ public class Entrant {
     setName(name);
 
 		setStatus(EntrantStatus.NOT_STARTED);
-		setLastNode(null);
-		setCurrentTrack(null);
   }
   
   public int getId() {
@@ -50,28 +46,6 @@ public class Entrant {
 
 	public void setStatus(EntrantStatus status) {
 		this.status = status;
-	}
-
-	public Node getLastNode() {
-		return lastNode;
-	}
-
-	private void setLastNode(Node node) {
-		lastNode = node;
-	}
-
-	public Track getCurrentTrack() {
-		return currentTrack;
-	}
-
-	private void setCurrentTrack(Track track) {
-		currentTrack = track;
-	}
-
-	public void update(Time time) {
-		if (getStatus() == EntrantStatus.RUNNING) {
-			// TODO
-		}
 	}
 
 }
