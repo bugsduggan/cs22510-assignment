@@ -5,11 +5,6 @@ public class Time {
 	private int hours;
 	private int minutes;
 
-	private Time(int minutes) {
-		setMinutes(minutes % 60);
-		setHours(minutes / 60);
-	}
-
 	public Time(int hrs, int mins) {
 		setHours(hrs);
 		setMinutes(mins);
