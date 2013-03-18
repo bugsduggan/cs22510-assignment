@@ -31,12 +31,4 @@ public class Time {
 		minutes = mins;
 	}
 
-	public Time getDelta(Time comp) {
-		return new Time(asMinutes() - comp.asMinutes());
-	}
-
-	public int asMinutes() {
-		return (getHours() * 60) + getMinutes();
-	}
-
 }
