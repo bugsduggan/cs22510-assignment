@@ -44,4 +44,8 @@ public class Entrant {
 		return null;
 	}
 
+	public void updateLocation(Node node) {
+		currentNode = node;
+	}
+
 }
