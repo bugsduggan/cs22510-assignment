@@ -16,6 +16,7 @@ import event.InvalidUpdate;
 import event.JunctionNode;
 import event.MedicalCheckpointNode;
 import event.Node;
+import event.Time;
 import event.TimeUpdate;
 import event.Track;
 import event.UpdateEvent;
@@ -233,22 +234,23 @@ public class Parser {
       Entrant entrant = event.getEntrant(Integer.parseInt(tokens[2]));
       int hrs = Integer.parseInt(tokens[3].split(":")[0]);
       int mins = Integer.parseInt(tokens[3].split(":")[1]);
+			Time time = new Time(hrs, mins);
 
 			switch (type) {
 				case 'T':
-					updates.add(new TimeUpdate(node, entrant, hrs, mins));
+					updates.add(new TimeUpdate(node, entrant, time));
 					break;
 			  case 'A':
-					updates.add(new ArrivalUpdate(node, entrant, hrs, mins));
+					updates.add(new ArrivalUpdate(node, entrant, time));
 					break;
 				case 'D':
-					updates.add(new DepartureUpdate(node, entrant, hrs, mins));
+					updates.add(new DepartureUpdate(node, entrant, time));
 					break;
 				case 'I':
-					updates.add(new InvalidUpdate(node, entrant, hrs, mins));
+					updates.add(new InvalidUpdate(node, entrant, time));
 					break;
 				case 'E':
-					updates.add(new ExcludedUpdate(node, entrant, hrs, mins));
+					updates.add(new ExcludedUpdate(node, entrant, time));
 					break;
 				default:
 					System.err.println("Failed to parse update type " + type);

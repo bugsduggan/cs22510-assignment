@@ -118,9 +118,9 @@ public class Event {
     this.entrants.addAll(entrants);
   }
 
-	public void update(int hrs, int mins) {
+	public void update(Time time) {
 		for (Entrant e : entrants) {
-			e.update(hrs, mins);
+			e.update(time);
 		}
 	}
 

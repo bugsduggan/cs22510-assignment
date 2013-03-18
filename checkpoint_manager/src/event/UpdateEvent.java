@@ -4,14 +4,12 @@ public abstract class UpdateEvent {
 
   private Node node;
   private Entrant entrant;
-  private int hrs;
-  private int mins;
+	private Time time;
   
-  public UpdateEvent(Node node, Entrant entrant, int hrs, int mins) {
+  public UpdateEvent(Node node, Entrant entrant, Time time) {
     setNode(node);
     setEntrant(entrant);
-    setHrs(hrs);
-    setMins(mins);
+		setTime(time);
   }
   
   public Node getNode() {
@@ -30,20 +28,12 @@ public abstract class UpdateEvent {
     this.entrant = entrant;
   }
   
-  public int getHrs() {
-    return hrs;
+  public Time getTime() {
+    return time;
   }
   
-  private void setHrs(int hrs) {
-    this.hrs = hrs;
-  }
-  
-  public int getMins() {
-    return mins;
-  }
-  
-  private void setMins(int mins) {
-    this.mins = mins;
+  private void setTime(Time time) {
+		this.time = time;
   }
 
 	public abstract void execute();

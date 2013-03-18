@@ -30,7 +30,7 @@ public class Driver {
 
 		// now apply any times
 		for (UpdateEvent evt : Parser.parseUpdateEvents(timesFile, event)) {
-			event.update(evt.getHrs(), evt.getMins());
+			event.update(evt.getTime());
 			evt.execute();
 		}
 		

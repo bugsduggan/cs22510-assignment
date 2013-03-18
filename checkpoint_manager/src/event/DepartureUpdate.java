@@ -2,8 +2,8 @@ package event;
 
 public class DepartureUpdate extends UpdateEvent {
 
-	public DepartureUpdate(Node node, Entrant entrant, int hrs, int mins) {
-		super(node, entrant, hrs, mins);
+	public DepartureUpdate(Node node, Entrant entrant, Time time) {
+		super(node, entrant, time);
 	}
 
 	@Override

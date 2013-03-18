@@ -68,7 +68,7 @@ public class Entrant {
 		currentTrack = track;
 	}
 
-	public void update(int hrs, int mins) {
+	public void update(Time time) {
 		if (getStatus() == EntrantStatus.RUNNING) {
 			// TODO
 		}
