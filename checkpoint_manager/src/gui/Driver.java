@@ -27,10 +27,14 @@ public class Driver {
     event.addTracks(Parser.parseTracks(tracksFile, event));
     event.addCourses(Parser.parseCourses(coursesFile, event));
     event.addEntrants(Parser.parseEntrants(entrantsFile, event));
-    
-    for (UpdateEvent evt : Parser.parseTimes(timesFile, event)) {
-      event.applyUpdate(evt);
-    }
+
+		// now apply any times
+		for (UpdateEvent evt : Parser.parseUpdateEvents(timesFile, event)) {
+			evt.execute();
+		}
+		
+		// now start the gui
+
   }
   
 }

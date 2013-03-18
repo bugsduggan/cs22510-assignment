@@ -10,7 +10,8 @@ import java.util.List;
 
 public class FileIO {
 
-  public static List<String> readLines(String filename) {
+  public static List<String> readLines(String filename) 
+			throws FileNotFoundException {
     List<String> lines = new ArrayList<String>();
     
     File f = new File(filename);
@@ -25,9 +26,8 @@ public class FileIO {
       
       in.close();
     } catch (FileNotFoundException e) {
-      System.err.println(filename + " not found");
-      System.exit(1);
-    } catch (IOException e) {
+			throw e;
+		} catch (IOException e) {
       e.printStackTrace();
     }
     

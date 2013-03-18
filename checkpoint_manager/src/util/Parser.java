@@ -1,5 +1,6 @@
 package util;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -17,7 +18,14 @@ import event.UpdateEvent;
 public class Parser {
 
   public static Event parseEvent(String eventFile) {
-    List<String> lines = FileIO.readLines(eventFile);
+		List<String> lines = new ArrayList<String>();
+
+		try {
+    	lines = FileIO.readLines(eventFile);
+		} catch (FileNotFoundException e) {
+			System.err.println(eventFile + " not found");
+			System.exit(1);
+		}
     
     String name = lines.get(0);
     
@@ -25,7 +33,7 @@ public class Parser {
     date.set(Calendar.DST_OFFSET, 0);
     String[] tokens = lines.get(1).split(" ");
     
-    int day = Integer.parseInt(tokens[0].split("[snr]")[0]);
+    int day = Integer.parseInt(tokens[0].split("[snrt]")[0]);
     date.set(Calendar.DATE, day);
     
     switch (tokens[1]) {
@@ -86,8 +94,16 @@ public class Parser {
 
   public static List<Node> parseNodes(String nodesFile) {
     List<Node> nodes = new ArrayList<Node>();
+		List<String> lines = new ArrayList<String>();
+		
+		try {
+			lines = FileIO.readLines(nodesFile);
+		} catch (FileNotFoundException e) {
+			System.err.println(nodesFile + " not found");
+			System.exit(1);
+		}
     
-    for (String line : FileIO.readLines(nodesFile)) {
+    for (String line : lines) {
       String[] tokens = line.split(" ");
       int id = Integer.parseInt(tokens[0]);
       switch (tokens[1]) {
@@ -112,8 +128,16 @@ public class Parser {
 
   public static List<Track> parseTracks(String tracksFile, Event event) {
     List<Track> tracks = new ArrayList<Track>();
+		List<String> lines = new ArrayList<String>();
+
+		try {
+			lines = FileIO.readLines(tracksFile);
+		} catch (FileNotFoundException e) {
+			System.err.println(tracksFile + " not found");
+			System.exit(1);
+		}
     
-    for (String line : FileIO.readLines(tracksFile)) {
+    for (String line : lines) {
       String[] tokens = line.split(" ");
       int id = Integer.parseInt(tokens[0]);
       Node start = event.getNode(Integer.parseInt(tokens[1]));
@@ -127,8 +151,16 @@ public class Parser {
 
   public static List<Course> parseCourses(String coursesFile, Event event) {
     List<Course> courses = new ArrayList<Course>();
+		List<String> lines = new ArrayList<String>();
+
+		try {
+			lines = FileIO.readLines(coursesFile);
+		} catch (FileNotFoundException e) {
+			System.err.println(coursesFile + " not found");
+			System.exit(1);
+		}
     
-    for (String line : FileIO.readLines(coursesFile)) {
+    for (String line : lines) {
       String[] tokens = line.split(" ");
       char id = tokens[0].charAt(0); // should be 1 char
       // we can ignore the next token unless we want to check the
@@ -154,8 +186,16 @@ public class Parser {
 
   public static List<Entrant> parseEntrants(String entrantsFile, Event event) {
     List<Entrant> entrants = new ArrayList<Entrant>();
+		List<String> lines = new ArrayList<String>();
+
+		try {
+			lines = FileIO.readLines(entrantsFile);
+		} catch (FileNotFoundException e) {
+			System.err.println(entrantsFile + " not found");
+			System.exit(1);
+		}
     
-    for (String line : FileIO.readLines(entrantsFile)) {
+    for (String line : lines) {
       String[] tokens = line.split(" ");
       int id = Integer.parseInt(tokens[0]);
       Course course = event.getCourse(tokens[1].charAt(0));
@@ -170,10 +210,18 @@ public class Parser {
     return entrants;
   }
   
-  public static List<UpdateEvent> parseTimes(String timesFile, Event event) {
+  public static List<UpdateEvent> parseUpdateEvents(String timesFile, Event event) {
     List<UpdateEvent> updates = new ArrayList<UpdateEvent>();
+		List<String> lines = new ArrayList<String>();
+
+		try {
+			lines = FileIO.readLines(timesFile);
+		} catch (FileNotFoundException e) {
+			// that's fine, maybe the event has just started
+			return updates;
+		}
     
-    for (String line : FileIO.readLines(timesFile)) {
+    for (String line : lines) {
       String[] tokens = line.split(" ");
       char type = tokens[0].charAt(0);
       Node node = event.getNode(Integer.parseInt(tokens[1]));
