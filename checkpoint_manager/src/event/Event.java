@@ -118,4 +118,10 @@ public class Event {
     this.entrants.addAll(entrants);
   }
 
+	public void update(int hrs, int mins) {
+		for (Entrant e : entrants) {
+			e.update(hrs, mins);
+		}
+	}
+
 }
