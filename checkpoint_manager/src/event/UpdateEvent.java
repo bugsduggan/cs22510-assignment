@@ -1,27 +1,17 @@
 package event;
 
-public class UpdateEvent {
+public abstract class UpdateEvent {
 
-  private char type;
   private Node node;
   private Entrant entrant;
   private int hrs;
   private int mins;
   
-  public UpdateEvent(char type, Node node, Entrant entrant, int hrs, int mins) {
-    setType(type);
+  public UpdateEvent(Node node, Entrant entrant, int hrs, int mins) {
     setNode(node);
     setEntrant(entrant);
     setHrs(hrs);
     setMins(mins);
-  }
-  
-  public char getType() {
-    return type;
-  }
-  
-  private void setType(char type) {
-    this.type = type;
   }
   
   public Node getNode() {
@@ -55,5 +45,7 @@ public class UpdateEvent {
   private void setMins(int mins) {
     this.mins = mins;
   }
+
+	public abstract void execute();
 
 }

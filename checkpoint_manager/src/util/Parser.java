@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import event.ArrivalUpdate;
 import event.CheckpointNode;
 import event.Course;
+import event.DepartureUpdate;
 import event.Entrant;
 import event.Event;
+import event.ExcludedUpdate;
+import event.InvalidUpdate;
 import event.JunctionNode;
 import event.MedicalCheckpointNode;
 import event.Node;
+import event.TimeUpdate;
 import event.Track;
 import event.UpdateEvent;
 
@@ -228,7 +233,28 @@ public class Parser {
       Entrant entrant = event.getEntrant(Integer.parseInt(tokens[2]));
       int hrs = Integer.parseInt(tokens[3].split(":")[0]);
       int mins = Integer.parseInt(tokens[3].split(":")[1]);
-      updates.add(new UpdateEvent(type, node, entrant, hrs, mins));
+
+			switch (type) {
+				case 'T':
+					updates.add(new TimeUpdate(node, entrant, hrs, mins));
+					break;
+			  case 'A':
+					updates.add(new ArrivalUpdate(node, entrant, hrs, mins));
+					break;
+				case 'D':
+					updates.add(new DepartureUpdate(node, entrant, hrs, mins));
+					break;
+				case 'I':
+					updates.add(new InvalidUpdate(node, entrant, hrs, mins));
+					break;
+				case 'E':
+					updates.add(new ExcludedUpdate(node, entrant, hrs, mins));
+					break;
+				default:
+					System.err.println("Failed to parse update type " + type);
+					System.exit(1);
+					break;
+			}
     }
     
     return updates;
