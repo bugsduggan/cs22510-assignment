@@ -5,3 +5,8 @@
 bin/
 *~
 *.swp
+makefile
+*.mk
+*.d
+Debug/
+Release/
