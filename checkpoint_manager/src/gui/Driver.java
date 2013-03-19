@@ -1,5 +1,11 @@
 package gui;
 
+import event.Event;
+import event.node.Node;
+import util.Parser;
+
+import java.util.List;
+
 public class Driver {
 
 	public static void main(String[] args) {
@@ -18,12 +24,12 @@ public class Driver {
 		String timeFile = args[5];
 
 		// Now read everything in
+		List<Node> nodes = Parser.parseNodes(nodeFile);
+		Event event = new Event(nodes);
 
 		// Process any times already in the file
 
 		// Start the gui
-		CheckpointFrame top = new CheckpointFrame();
-		top.setVisible(true);
 	}
 
 }
