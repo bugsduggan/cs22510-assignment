@@ -6,6 +6,7 @@ import event.node.CheckpointNode;
 import event.node.JunctionNode;
 import event.node.MedicalCheckpointNode;
 import event.node.Node;
+import event.update.ArrivalUpdate;
 import event.update.TimeUpdate;
 import event.update.Update;
 
@@ -75,6 +76,7 @@ public class Parser {
 					updates.add(new TimeUpdate(node, entrant, time));
 					break;
 				case 'A':
+					updates.add(new ArrivalUpdate(node, entrant, time));
 					break;
 				case 'D':
 					break;
