@@ -43,29 +43,21 @@ public class Driver {
 			u.execute();
 		}
 
-		// Start the gui
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        createAndShowGUI();
-      }
-		});
-		
-		CheckpointPanel panel = new CheckpointPanel(event);
-		top.add(panel);
-		panel.setVisible(true);
-	}
-
-	private static void createAndShowGUI() {
-	  top = new JFrame("Checkpoint Manager");
+		top = new JFrame("Checkpoint Manager");
     top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     Dimension dim = new Dimension(800, 600);
     top.setSize(dim);
     top.setPreferredSize(dim);
     top.setMinimumSize(dim);
     top.setMaximumSize(dim);
+
+		CheckpointPanel panel = new CheckpointPanel(event);
+		top.add(panel);
+		panel.setVisible(true);
+
 		top.pack();
-    top.setVisible(true);
+		top.setVisible(true);
 	}
-	
+
 }
