@@ -7,10 +7,15 @@ import event.node.Node;
 import event.update.Update;
 import util.Parser;
 
+import java.awt.Dimension;
 import java.util.List;
+
+import javax.swing.JFrame;
 
 public class Driver {
 
+  private static JFrame top;
+  
 	public static void main(String[] args) {
 		if (args.length < 6) {
 			System.out.println("Usage:");
@@ -39,6 +44,28 @@ public class Driver {
 		}
 
 		// Start the gui
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        createAndShowGUI();
+      }
+		});
+		
+		CheckpointPanel panel = new CheckpointPanel(event);
+		top.add(panel);
+		panel.setVisible(true);
 	}
 
+	private static void createAndShowGUI() {
+	  top = new JFrame("Checkpoint Manager");
+    top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    Dimension dim = new Dimension(800, 600);
+    top.setSize(dim);
+    top.setPreferredSize(dim);
+    top.setMinimumSize(dim);
+    top.setMaximumSize(dim);
+		top.pack();
+    top.setVisible(true);
+	}
+	
 }
