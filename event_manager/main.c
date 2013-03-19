@@ -89,10 +89,8 @@ int display_menu(Event* event) {
   printf("\t 4. Show how many entrants have finished\n");
   printf("\t 5. List entrants excluded for safety\n");
   printf("\t 6. List entrants excluded for incorrect route\n");
-  printf("\t 7. Supply checkpoint times manually\n");
-  printf("\t 8. Supply checkpoint times from a file\n");
-  printf("\t 9. Display results list\n");
-  printf("\t10. Exit the program\n");
+  printf("\t 7. Display results list\n");
+  printf("\t 8. Exit the program\n");
   printf("\n");
 
   printf("%02d:%02d  >>  ", event->time->hours, event->time->minutes);
@@ -242,100 +240,6 @@ void display_results(Event* event) {
 }
 
 /*
- * update an entrant manually
- */
-void update_manual(Event* event) {
-  char* line;
-  char type;
-  int node_id;
-  int entrant_id;
-  Time* time;
-
-  /* type */
-  printf("Enter update type (T/I/A/D/E): ");
-  line = readline();
-  type = line[0];
-  while (type != 't' && type != 'T' &&
-      type != 'i' && type != 'I' &&
-      type != 'a' && type != 'A' &&
-      type != 'd' && type != 'D' &&
-      type != 'e' && type != 'E') {
-    printf("Invalid type. Please enter one of T/I/A/D/E: ");
-    free(line);
-    line = readline();
-    type = line[0];
-  }
-  free(line);
-
-  /* node id */
-  printf("Enter node id: ");
-  line = readline();
-  node_id = atoi(line);
-  free(line);
-
-  /* entrant id */
-  printf("Enter entrant id: ");
-  line = readline();
-  entrant_id = atoi(line);
-  free(line);
-
-  /* time */
-  printf("Enter time (hh:mm): ");
-  line = readline();
-  time = str_to_time(line);
-  free(line);
-
-  update_time(event, time, entrant_id); /* entrant_id refers to an entrant that will
-                                           NOT be updated by this call */
-  entrant_update_location(event, type, entrant_id, node_id); /* they get updated here */
-
-  /* print out the entrant's stats */
-  entrant_stats(entrant_from_id(event->entrants, entrant_id), event->time);
-  free(time);
-}
-
-/*
- * update entrants from a file
- */
-void update_file(Event* event) {
-  char* filename = get_filename("Enter checkpoint file: ");
-  Vector* lines = read_file(filename);
-  char* line;
-  char* token;
-  char type;
-  int node_id;
-  int entrant_id;
-  Time* time;
-  int i = 0;
-
-  for (i = 0; i < Vector_size(lines); i++) {
-    Vector_get(lines, i, &line);
-
-    /* type */
-    token = strtok(line, " ");
-    type = token[0];
-
-    /* node id */
-    token = strtok(NULL, " ");
-    node_id = atoi(token);
-
-    /* entrant id */
-    token = strtok(NULL, " ");
-    entrant_id = atoi(token);
-
-    /* time */
-    token = strtok(NULL, "\n");
-    time = str_to_time(token);
-
-    update_time(event, time, entrant_id);
-    entrant_update_location(event, type, entrant_id, node_id);
-  }
-
-  display_results(event);
-  Vector_dispose(lines);
-}
-
-/*
  * the main method (including program loop)
  */
 int main(int argc, char* argv[]) {
@@ -366,15 +270,9 @@ int main(int argc, char* argv[]) {
         list_excluded_incorrect(event);
         break;
       case 7:
-        update_manual(event);
-        break;
-      case 8:
-        update_file(event);
-        break;
-      case 9:
         display_results(event);
         break;
-      case 10:
+      case 8:
         running = 0;
         break;
       default:
