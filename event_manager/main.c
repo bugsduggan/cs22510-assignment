@@ -183,8 +183,7 @@ void list_excluded_incorrect(Event* event) {
 /*
  * update entrants from a file
  */
-void update_file(Event* event) {
-  char* filename = get_filename("Enter checkpoint file: ");
+int refresh(Event* event, char* filename, int t_index) {
   Vector* lines = read_file(filename);
   char* line;
   char* token;
@@ -192,9 +191,9 @@ void update_file(Event* event) {
   int node_id;
   int entrant_id;
   Time* time;
-  int i = 0;
+  int i;
 
-  for (i = 0; i < Vector_size(lines); i++) {
+  for (i = t_index; i < Vector_size(lines); i++) {
     Vector_get(lines, i, &line);
 
     /* type */
@@ -217,8 +216,8 @@ void update_file(Event* event) {
     entrant_update_location(event, type, entrant_id, node_id);
   }
 
-  display_results(event);
   Vector_dispose(lines);
+	return i;
 }
 
 /*
@@ -287,7 +286,10 @@ int main(int argc, char* argv[]) {
   Event* event = read_data();
   int running = 1;
   int input;
+	int t_index = 0; /* the index for the times */
+	char* times_file = get_filename("Please enter times file: ");
 
+	t_index = refresh(event, times_file, t_index);
   display_event_header(event);
   while (running) {
     input = display_menu(event);
@@ -320,6 +322,7 @@ int main(int argc, char* argv[]) {
         /* invalid input, do nothing */
         break;
     }
+		t_index = refresh(event, times_file, t_index);
   }
 
   return EXIT_SUCCESS;
