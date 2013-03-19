@@ -279,10 +279,6 @@ void display_results(Event* event) {
   }
 }
 
-void write_to_log(char* line) {
-	
-}
-
 /*
  * the main method (including program loop)
  */
@@ -302,35 +298,35 @@ int main(int argc, char* argv[]) {
     switch (input) {
       case 1:
         locate_entrant(event);
-				write_to_log("EM: entrant query");
+				append_to_file(log_file, "EM: entrant query");
         break;
       case 2:
         printf("\t%d\n", count_by_status(event, NOT_STARTED));
-				write_to_log("EM: entrants counted - not started");
+				append_to_file(log_file, "EM: entrants counted - not started");
         break;
       case 3:
         printf("\t%d\n", count_by_status(event, STARTED) + count_by_status(event, STOPPED));
-				write_to_log("EM: entrants counted - running");
+				append_to_file(log_file, "EM: entrants counted - running");
         break;
       case 4:
         printf("\t%d\n", count_by_status(event, FINISHED));
-				write_to_log("EM: entrants counted - finished");
+				append_to_file(log_file, "EM: entrants counted - finished");
         break;
       case 5:
         list_excluded_safety(event);
-				write_to_log("EM: entrants listed - excluded");
+				append_to_file(log_file, "EM: entrants listed - excluded");
         break;
       case 6:
         list_excluded_incorrect(event);
-				write_to_log("EM: entrants listed - disqualified");
+				append_to_file(log_file, "EM: entrants listed - disqualified");
         break;
       case 7:
         display_results(event);
-				write_to_log("EM: results displayed");
+				append_to_file(log_file, "EM: results displayed");
         break;
       case 8:
         running = 0;
-				write_to_log("EM: quitting");
+				append_to_file(log_file, "EM: quitting");
         break;
       default:
         /* invalid input, do nothing */

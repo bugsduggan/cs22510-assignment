@@ -23,5 +23,6 @@ Vector* read_file(char* filename);  /* reads a whole file into a vector */
 Time* str_to_time(char* str);       /* produces a time from a string (hh:mm) */
 Time* timecpy(Time* time);          /* deep copy a time struct */
 int time_to_duration(Time* time);   /* turn hh:mm into mm */
+void append_to_file(char* filename, char* line);
 
 #endif

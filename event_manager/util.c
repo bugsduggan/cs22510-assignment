@@ -138,3 +138,11 @@ Time* timecpy(Time* time) {
 int time_to_duration(Time* time) {
   return time->minutes + (time->hours * 60);
 }
+
+void append_to_file(char* filename, char* line) {
+	FILE* fp;
+
+	fp = fopen(filename, "a+");
+	fprintf(fp, "%s\n", line);
+	fclose(fp);
+}
