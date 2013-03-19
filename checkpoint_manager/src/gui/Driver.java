@@ -34,6 +34,9 @@ public class Driver {
 
 		// Process any times already in the file
 		List<Update> updates = Parser.parseUpdates(timeFile, event);
+		for (Update u : updates) {
+			u.execute();
+		}
 
 		// Start the gui
 	}
