@@ -1,5 +1,6 @@
 package util;
 
+import event.Course;
 import event.Entrant;
 import event.Event;
 import event.node.CheckpointNode;
@@ -52,6 +53,75 @@ public class Parser {
 		}
 
 		return nodes;
+	}
+
+	public static List<Course> parseCourses(String filename, List<Node> nodes) {
+		List<Course> courses = new ArrayList<Course>();
+		List<String> lines = new ArrayList<String>();
+
+		try {
+			lines = FileIO.readLines(filename);
+		} catch (FileNotFoundException e) {
+			System.err.println(filename + " not found");
+			System.exit(1);
+		}
+
+		for (String line : lines) {
+			String[] tokens = line.split(" ");
+
+			char id = tokens[0].charAt(0); // should be 1 char
+			// ignore the next token, I don't care
+			List<Node> courseNodes = new ArrayList<Node>();
+			for (int i = 2; i < tokens.length; i++) {
+				courseNodes.add(findNode(Integer.parseInt(tokens[i]), nodes));
+			}
+
+			courses.add(new Course(id, courseNodes));
+		}
+
+		return courses;
+	}
+
+	private static Node findNode(int id, List<Node> nodes) {
+		for (Node n : nodes) {
+			if (n.getId() == id) return n;
+		}
+		return null;
+	}
+
+	public static List<Entrant> parseEntrants(String filename, List<Course> courses) {
+		List<Entrant> entrants = new ArrayList<Entrant>();
+		List<String> lines = new ArrayList<String>();
+
+		try {
+			lines = FileIO.readLines(filename);
+		} catch (FileNotFoundException e) {
+			System.err.println(filename + " not found");
+			System.exit(1);
+		}
+
+		for (String line : lines) {
+			String[] tokens = line.split(" ");
+
+			int id = Integer.parseInt(tokens[0]);
+			Course course = findCourse(tokens[1].charAt(0), courses);
+			String name = new String();
+			for (int i = 2; i < tokens.length; i++) {
+				name = name + tokens[i] + " ";
+			}
+			name = name.substring(0, name.length() - 1);
+
+			entrants.add(new Entrant(id, course, name));
+		}
+
+		return entrants;
+	}
+
+	private static Course findCourse(char id, List<Course> courses) {
+		for (Course c : courses) {
+			if (c.getId() == id) return c;
+		}
+		return null;
 	}
 
 	public static List<Update> parseUpdates(String filename, Event event) {

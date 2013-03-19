@@ -22,4 +22,8 @@ public class Course {
 		return nodes;
 	}
 
+	public Node getLastNode() {
+		return nodes.get(nodes.size() - 1);
+	}
+
 }

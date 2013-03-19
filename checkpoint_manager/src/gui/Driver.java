@@ -1,5 +1,7 @@
 package gui;
 
+import event.Course;
+import event.Entrant;
 import event.Event;
 import event.node.Node;
 import event.update.Update;
@@ -26,7 +28,9 @@ public class Driver {
 
 		// Now read everything in
 		List<Node> nodes = Parser.parseNodes(nodeFile);
-		Event event = new Event(nodes);
+		List<Course> courses = Parser.parseCourses(courseFile, nodes);
+		List<Entrant> entrants = Parser.parseEntrants(entrantFile, courses);
+		Event event = new Event(nodes, entrants);
 
 		// Process any times already in the file
 		List<Update> updates = Parser.parseUpdates(timeFile, event);
