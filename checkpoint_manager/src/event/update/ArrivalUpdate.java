@@ -13,6 +13,7 @@ public class ArrivalUpdate extends Update {
 	@Override
 	public void execute() {
 		getEntrant().updateLocation(getNode());
+		getEntrant().setStatus(Entrant.STOPPED);
 	}
 
 }

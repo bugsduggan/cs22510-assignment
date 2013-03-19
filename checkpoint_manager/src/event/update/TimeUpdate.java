@@ -12,6 +12,7 @@ public class TimeUpdate extends Update {
 
 	@Override
 	public void execute() {
+		getEntrant().setStatus(Entrant.RUNNING);
 		getEntrant().updateLocation(getNode());
 	}
 

@@ -12,7 +12,7 @@ public class DepartureUpdate extends Update {
 
 	@Override
 	public void execute() {
-		
+		getEntrant().setStatus(Entrant.RUNNING);
 	}
 
 }

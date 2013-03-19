@@ -12,7 +12,7 @@ public class ExcludedUpdate extends Update {
 
 	@Override
 	public void execute() {
-
+		getEntrant().setStatus(Entrant.DISQUALIFIED);
 	}
 
 }

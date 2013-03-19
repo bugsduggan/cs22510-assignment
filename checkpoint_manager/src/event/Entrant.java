@@ -5,11 +5,18 @@ import event.node.JunctionNode;
 
 public class Entrant {
 
+	public static final Status NOT_STARTED = Status.NOT_STARTED;
+	public static final Status RUNNING = Status.RUNNING;
+	public static final Status STOPPED = Status.STOPPED;
+	public static final Status FINISHED = Status.FINISHED;
+	public static final Status DISQUALIFIED = Status.DISQUALIFIED;
+
 	private int id;
 	private Course course;
 	private String name;
 
 	private Node currentNode;
+	private Status status;
 
 	public Entrant(int id, Course course, String name) {
 		this.id = id;
@@ -17,6 +24,7 @@ public class Entrant {
 		this.name = name;
 
 		currentNode = null;
+		status = NOT_STARTED;
 	}
 
 	public int getId() {
@@ -29,6 +37,14 @@ public class Entrant {
 
 	public String getName() {
 		return name;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	/**
@@ -46,6 +62,14 @@ public class Entrant {
 
 	public void updateLocation(Node node) {
 		currentNode = node;
+	}
+
+	private enum Status {
+		NOT_STARTED,
+		RUNNING,
+		STOPPED,
+		FINISHED,
+		DISQUALIFIED
 	}
 
 }
