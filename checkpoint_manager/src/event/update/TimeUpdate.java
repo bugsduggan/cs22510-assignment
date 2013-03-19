@@ -14,6 +14,8 @@ public class TimeUpdate extends Update {
 	public void execute() {
 		getEntrant().setStatus(Entrant.RUNNING);
 		getEntrant().updateLocation(getNode());
+		if (getNode() == getEntrant().getCourse().getLastNode())
+			getEntrant().setStatus(Entrant.FINISHED);
 	}
 
 }
