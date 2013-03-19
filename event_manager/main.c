@@ -181,6 +181,47 @@ void list_excluded_incorrect(Event* event) {
 }
 
 /*
+ * update entrants from a file
+ */
+void update_file(Event* event) {
+  char* filename = get_filename("Enter checkpoint file: ");
+  Vector* lines = read_file(filename);
+  char* line;
+  char* token;
+  char type;
+  int node_id;
+  int entrant_id;
+  Time* time;
+  int i = 0;
+
+  for (i = 0; i < Vector_size(lines); i++) {
+    Vector_get(lines, i, &line);
+
+    /* type */
+    token = strtok(line, " ");
+    type = token[0];
+
+    /* node id */
+    token = strtok(NULL, " ");
+    node_id = atoi(token);
+
+    /* entrant id */
+    token = strtok(NULL, " ");
+    entrant_id = atoi(token);
+
+    /* time */
+    token = strtok(NULL, "\n");
+    time = str_to_time(token);
+
+    update_time(event, time, entrant_id);
+    entrant_update_location(event, type, entrant_id, node_id);
+  }
+
+  display_results(event);
+  Vector_dispose(lines);
+}
+
+/*
  * display all the entrants based on status/duration
  */
 void display_results(Event* event) {
