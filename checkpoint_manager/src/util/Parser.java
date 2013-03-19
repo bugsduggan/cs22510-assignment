@@ -1,9 +1,13 @@
 package util;
 
+import event.Entrant;
+import event.Event;
 import event.node.CheckpointNode;
 import event.node.JunctionNode;
 import event.node.MedicalCheckpointNode;
 import event.node.Node;
+import event.update.TimeUpdate;
+import event.update.Update;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -44,6 +48,48 @@ public class Parser {
 		}
 
 		return nodes;
+	}
+
+	public static List<Update> parseUpdates(String filename, Event event) {
+		List<Update> updates = new ArrayList<Update>();
+		List<String> lines = new ArrayList<String>();
+
+		try {
+			lines = FileIO.readLines(filename);
+		} catch (FileNotFoundException e) {
+			System.err.println(filename + " not found");
+			System.exit(1);
+		}
+
+		for (String line : lines) {
+			String[] tokens = line.split(" ");
+			
+			char type = tokens[0].charAt(0); // should be 1 char
+			Node node = event.getNode(Integer.parseInt(tokens[1]));
+			Entrant entrant = event.getEntrant(Integer.parseInt(tokens[2]));
+			Time time = new Time(Integer.parseInt(tokens[3].split(":")[0]),
+						Integer.parseInt(tokens[3].split(":")[1]));
+
+			switch (type) {
+				case 'T':
+					updates.add(new TimeUpdate(node, entrant, time));
+					break;
+				case 'A':
+					break;
+				case 'D':
+					break;
+				case 'I':
+					break;
+				case 'E':
+					break;
+				default:
+					System.err.println("Failed to parse update type " + type);
+					System.exit(1);
+					break;
+			}
+		}
+
+		return updates;
 	}
 
 }

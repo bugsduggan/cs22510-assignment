@@ -2,6 +2,7 @@ package gui;
 
 import event.Event;
 import event.node.Node;
+import event.update.Update;
 import util.Parser;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class Driver {
 		Event event = new Event(nodes);
 
 		// Process any times already in the file
+		List<Update> updates = Parser.parseUpdates(timeFile, event);
 
 		// Start the gui
 	}
