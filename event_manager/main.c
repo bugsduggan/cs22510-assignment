@@ -287,8 +287,13 @@ int main(int argc, char* argv[]) {
   int running = 1;
   int input;
 	int t_index = 0; /* the index for the times */
-	char* times_file = get_filename("Please enter times file: ");
-	char* log_file = get_filename("Please enter log file: ");
+	char* times_file;
+	char* log_file;
+
+	printf("Please enter times file: ");
+	times_file = readline();
+	printf("Please enter log file: ");
+	log_file = readline();
 
 	t_index = refresh(event, times_file, t_index);
   display_event_header(event);
