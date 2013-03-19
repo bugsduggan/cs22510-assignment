@@ -131,8 +131,8 @@ public class Parser {
 		try {
 			lines = FileIO.readLines(filename);
 		} catch (FileNotFoundException e) {
-			System.err.println(filename + " not found");
-			System.exit(1);
+			// Maybe we've just started, return an empty list
+			return updates;
 		}
 
 		for (String line : lines) {
