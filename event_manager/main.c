@@ -293,6 +293,7 @@ int main(int argc, char* argv[]) {
   display_event_header(event);
   while (running) {
     input = display_menu(event);
+		t_index = refresh(event, times_file, t_index);
     switch (input) {
       case 1:
         locate_entrant(event);
@@ -322,7 +323,6 @@ int main(int argc, char* argv[]) {
         /* invalid input, do nothing */
         break;
     }
-		t_index = refresh(event, times_file, t_index);
   }
 
   return EXIT_SUCCESS;
