@@ -7,6 +7,9 @@ import event.node.JunctionNode;
 import event.node.MedicalCheckpointNode;
 import event.node.Node;
 import event.update.ArrivalUpdate;
+import event.update.DepartureUpdate;
+import event.update.ExcludedUpdate;
+import event.update.InvalidUpdate;
 import event.update.TimeUpdate;
 import event.update.Update;
 
@@ -79,10 +82,13 @@ public class Parser {
 					updates.add(new ArrivalUpdate(node, entrant, time));
 					break;
 				case 'D':
+					updates.add(new DepartureUpdate(node, entrant, time));
 					break;
 				case 'I':
+					updates.add(new InvalidUpdate(node, entrant, time));
 					break;
 				case 'E':
+					updates.add(new ExcludedUpdate(node, entrant, time));
 					break;
 				default:
 					System.err.println("Failed to parse update type " + type);
