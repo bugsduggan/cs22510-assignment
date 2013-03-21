@@ -160,11 +160,17 @@ void append_to_file(char* filename, char* line) {
 	int fd = open(filename, O_RDWR);
 
 	if (fd == -1) {
-		/* I think I'm going to want to create the file in here if it doesn't */
-		/* already exist */
-		/* TODO */
-		printf("File descriptor error");
-		exit(1);
+		/* I'm going to assume that I can't get a descriptor because the file doesn't */
+		/* exist yet, so let's create it with a call to fopen */
+		fp = fopen(filename, "a+");
+		fclose(fp);
+		/* and then try again */
+		fd = open(filename, O_RDWR);
+		if (fd == -1) {
+			/* bad times! */
+			printf("Error getting file descriptor");
+			exit(1);
+		}
 	}
 
 	fl = file_lock(F_WRLCK, SEEK_SET);
