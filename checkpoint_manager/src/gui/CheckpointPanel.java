@@ -1,5 +1,7 @@
 package gui;
 
+import event.node.CheckpointNode;
+import event.node.MedicalCheckpointNode;
 import event.node.Node;
 import event.Entrant;
 import event.Event;
@@ -47,6 +49,7 @@ public class CheckpointPanel extends JPanel {
 			entrants[i] = event.getEntrants().get(i).getName();
 		}
 		entrantBox = new JComboBox<String>(entrants);
+		entrantBox.addActionListener(listener);
 		northPanel.add(entrantBox);
 
 		String[] nodes = new String[event.getNodes().size()];
@@ -54,6 +57,7 @@ public class CheckpointPanel extends JPanel {
 			nodes[i] = Integer.toString(event.getNodes().get(i).getId());
 		}
 		nodeBox = new JComboBox<String>(nodes);
+		nodeBox.addActionListener(listener);
 		northPanel.add(nodeBox);
 
 		add(northPanel, BorderLayout.NORTH);
@@ -100,6 +104,8 @@ public class CheckpointPanel extends JPanel {
 		southPanel.add(excludeButton);
 
 		add(southPanel, BorderLayout.NORTH);
+
+		updateButtons();
 	}
 
 	private Entrant getSelectedEntrant() {
@@ -124,6 +130,40 @@ public class CheckpointPanel extends JPanel {
 		return new Time(hours, minutes);
 	}
 
+	private boolean correctNode() {
+		return getSelectedEntrant().getNextCheckpoint() == getSelectedNode();
+	}
+
+	private void updateButtons() {
+		Node n = getSelectedNode();
+
+		if (n instanceof CheckpointNode) {
+			// enable submit, disable the rest
+			submitButton.setEnabled(true);
+			arriveButton.setEnabled(false);
+			departButton.setEnabled(false);
+			excludeButton.setEnabled(false);
+		} else if (n instanceof MedicalCheckpointNode) {
+			// disable submit, enable the rest
+			submitButton.setEnabled(false);
+			if (getSelectedEntrant().getStatus() == Entrant.STOPPED) {
+				arriveButton.setEnabled(false);
+				departButton.setEnabled(true);
+				excludeButton.setEnabled(true);
+			} else {
+				arriveButton.setEnabled(true);
+				departButton.setEnabled(false);
+				excludeButton.setEnabled(false);
+			}
+		} else {
+			// disable them all
+			submitButton.setEnabled(false);
+			arriveButton.setEnabled(false);
+			departButton.setEnabled(false);
+			excludeButton.setEnabled(false);
+		}
+	}
+
 	private class Listener implements ActionListener {
 
 		private Event event;
@@ -136,20 +176,22 @@ public class CheckpointPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent evt) {
-			if (evt.getSource() == currTimeBox) {
+			if (evt.getSource() == entrantBox || evt.getSource() == nodeBox) {
+				updateButtons();
+			} else if (evt.getSource() == currTimeBox) {
 				// TODO	
 			} else if (evt.getSource() == arriveButton) {
 				Update update = new ArrivalUpdate(
-						getSelectedNode(), getSelectedEntrant(), getSelectedTime());
+					getSelectedNode(), getSelectedEntrant(), getSelectedTime());
 				update.execute();
 				FileIO.appendToFile(logFile, "CM: A type event recorded");
 			} else if (evt.getSource() == departButton) {
 				Update update = new DepartureUpdate(
-						getSelectedNode(), getSelectedEntrant(), getSelectedTime());
+					getSelectedNode(), getSelectedEntrant(), getSelectedTime());
 				update.execute();
 				FileIO.appendToFile(logFile, "CM: D type event recorded");
 		  } else if (evt.getSource() == submitButton) {
-				if (getSelectedNode() == getSelectedEntrant().getNextCheckpoint()) {
+				if (correctNode()) {
 					Update update = new TimeUpdate(
 							getSelectedNode(), getSelectedEntrant(), getSelectedTime());
 					update.execute();
