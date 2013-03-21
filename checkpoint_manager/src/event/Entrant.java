@@ -52,7 +52,7 @@ public class Entrant {
 	 */
 	public Node getNextCheckpoint() {
 		int currI = course.getNodes().indexOf(currentNode);
-		if (currI == -1) return null; // something went wrong, oh well
+		if (currI == -1) return getCourse().getNodes().get(0); // clearly hasn't started yet
 		for (int i = currI + 1; i < course.getNodes().size(); i++) {
 			if (!(course.getNodes().get(i) instanceof JunctionNode))
 				return course.getNodes().get(i);
