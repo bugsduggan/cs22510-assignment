@@ -28,4 +28,8 @@ public class Event {
 		return null;
 	}
 
+	public List<Entrant> getEntrants() {
+		return entrants;
+	}
+
 }

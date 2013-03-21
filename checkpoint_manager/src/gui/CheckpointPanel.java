@@ -1,8 +1,11 @@
 package gui;
 
+import event.Entrant;
 import event.Event;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -28,7 +31,11 @@ public class CheckpointPanel extends JPanel {
 		// north panel
 		JPanel northPanel = new JPanel();
 
-		entrantBox = new JComboBox<String>();
+		String[] entrants = new String[event.getEntrants().size()];
+		for (int i = 0; i < event.getEntrants().size(); i++) {
+			entrants[i] = event.getEntrants().get(i).getName();
+		}
+		entrantBox = new JComboBox<String>(entrants);
 		northPanel.add(entrantBox);
 
 		nodeBox = new JComboBox<String>();

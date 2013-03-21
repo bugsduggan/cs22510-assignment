@@ -14,10 +14,10 @@ import javax.swing.JFrame;
 public class Driver {
   
 	public static void main(String[] args) {
-		if (args.length < 6) {
+		if (args.length < 7) {
 			System.out.println("Usage:");
 			System.out.println("java Driver <event_file> <node_file> <track_file> " +
-					"<course_file> <entrant_file> <time_file>");
+					"<course_file> <entrant_file> <time_file> <log_file>");
 			System.exit(1);
 		}
 
@@ -27,6 +27,7 @@ public class Driver {
 		String courseFile = args[3];
 		String entrantFile = args[4];
 		String timeFile = args[5];
+		String logFile = args[6];
 
 		// Now read everything in
 		List<Node> nodes = Parser.parseNodes(nodeFile);
@@ -43,6 +44,7 @@ public class Driver {
 		JFrame top = new JFrame("Checkpoint Manager");
     top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		// this breaks stuff somehow?
     //Dimension dim = new Dimension(800, 600);
     //top.setSize(dim);
     //top.setPreferredSize(dim);
