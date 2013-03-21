@@ -38,6 +38,8 @@ public class FileIO {
 	public static void appendToFile(String filename, String text) {
 		File f = new File(filename);
 		try {
+			if (!f.exists())
+				f.createNewFile();
 			FileOutputStream fos = new FileOutputStream(f, true);
 			FileLock fl = fos.getChannel().tryLock();
 			while (fl == null) {
@@ -47,7 +49,6 @@ public class FileIO {
 			out.write(text + "\n");
 
 			fl.release();
-			fos.close();
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
