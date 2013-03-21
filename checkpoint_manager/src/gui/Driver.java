@@ -44,13 +44,13 @@ public class Driver {
 		}
 
 		top = new JFrame("Checkpoint Manager");
-    top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    Dimension dim = new Dimension(800, 600);
-    top.setSize(dim);
-    top.setPreferredSize(dim);
-    top.setMinimumSize(dim);
-    top.setMaximumSize(dim);
+        Dimension dim = new Dimension(800, 600);
+        top.setSize(dim);
+        top.setPreferredSize(dim);
+        top.setMinimumSize(dim);
+        top.setMaximumSize(dim);
 
 		CheckpointPanel panel = new CheckpointPanel(event);
 		top.add(panel);
