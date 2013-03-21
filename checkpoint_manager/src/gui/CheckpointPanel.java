@@ -12,11 +12,11 @@ import util.Time;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -75,12 +75,9 @@ public class CheckpointPanel extends JPanel {
 		minsField.setText("00");
 		centrePanel.add(minsField);
 
-		currTimeBox = new JCheckBox();
+		currTimeBox = new JCheckBox("Use current time");
 		currTimeBox.addActionListener(listener);
 		centrePanel.add(currTimeBox);
-
-		JLabel currTimeLabel = new JLabel("Use current time");
-		centrePanel.add(currTimeLabel);
 
 		add(centrePanel, BorderLayout.CENTER);
 
@@ -105,6 +102,7 @@ public class CheckpointPanel extends JPanel {
 
 		add(southPanel, BorderLayout.NORTH);
 
+		updateTime();
 		updateButtons();
 	}
 
@@ -164,6 +162,14 @@ public class CheckpointPanel extends JPanel {
 		}
 	}
 
+	private void updateTime() {
+		Calendar cal = Calendar.getInstance();
+		hrsField.setText(Integer.toString(
+					cal.get(Calendar.HOUR_OF_DAY)));
+		minsField.setText(Integer.toString(
+					cal.get(Calendar.MINUTE)));
+	}
+
 	private class Listener implements ActionListener {
 
 		private Event event;
@@ -181,7 +187,17 @@ public class CheckpointPanel extends JPanel {
 			if (evt.getSource() == entrantBox || evt.getSource() == nodeBox) {
 				updateButtons();
 			} else if (evt.getSource() == currTimeBox) {
-				// TODO	
+				if (currTimeBox.isSelected()) {
+					// set time boxes
+					updateTime();
+					// disable them
+					hrsField.setEnabled(false);
+					minsField.setEnabled(false);
+				} else {
+					// enable boxes
+					hrsField.setEnabled(true);
+					minsField.setEnabled(true);
+				}
 			} else if (evt.getSource() == arriveButton) {
 				Update update = new ArrivalUpdate(
 					getSelectedNode(), getSelectedEntrant(), getSelectedTime());
@@ -215,6 +231,12 @@ public class CheckpointPanel extends JPanel {
 				writeUpdate(update);
 				FileIO.appendToFile(logFile, "CM: E type event recorded");
 			}
+
+			// we'll want to keep current time updated if necessary
+			// (but without changing what the user thinks they're using for
+			// the time) so update it here
+			if (currTimeBox.isSelected())
+				updateTime();
 		}
 
 		private void writeUpdate(Update update) {
