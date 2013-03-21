@@ -1,11 +1,11 @@
 package gui;
 
-import event.Entrant;
 import event.Event;
+import util.FileIO;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,11 +23,15 @@ public class CheckpointPanel extends JPanel {
 	private JTextField minsField;
 	private JCheckBox currTimeBox;
 
+	private JButton arriveButton;
+	private JButton departButton;
 	private JButton submitButton;
 	private JButton excludeButton;
 
-	public CheckpointPanel(Event event) {
+	public CheckpointPanel(Event event, String logFile) {
 		// make components
+		ActionListener listener = new Listener(event, logFile);
+
 		// north panel
 		JPanel northPanel = new JPanel();
 
@@ -59,6 +63,7 @@ public class CheckpointPanel extends JPanel {
 		centrePanel.add(minsField);
 
 		currTimeBox = new JCheckBox();
+		currTimeBox.addActionListener(listener);
 		centrePanel.add(currTimeBox);
 
 		JLabel currTimeLabel = new JLabel("Use current time");
@@ -69,13 +74,55 @@ public class CheckpointPanel extends JPanel {
 		// south panel
 		JPanel southPanel = new JPanel();
 
+		arriveButton = new JButton("Arrive");
+		arriveButton.addActionListener(listener);
+		southPanel.add(arriveButton);
+
+		departButton = new JButton("Depart");
+		departButton.addActionListener(listener);
+		southPanel.add(departButton);
+
 		submitButton = new JButton("Submit");
+		submitButton.addActionListener(listener);
 		southPanel.add(submitButton);
 
 		excludeButton = new JButton("Exclude");
+		excludeButton.addActionListener(listener);
 		southPanel.add(excludeButton);
 
 		add(southPanel, BorderLayout.NORTH);
+	}
+
+	private class Listener implements ActionListener {
+
+		private Event event;
+		private String logFile;
+
+		public Listener(Event event, String logFile) {
+			this.event = event;
+			this.logFile = logFile;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent evt) {
+			if (evt.getSource() == currTimeBox) {
+				// TODO	
+			} else if (evt.getSource() == arriveButton) {
+				// TODO
+				FileIO.appendToFile(logFile, "CM: A type event recorded");
+			} else if (evt.getSource() == departButton) {
+				// TODO
+				FileIO.appendToFile(logFile, "CM: D type event recorded");
+		  } else if (evt.getSource() == submitButton) {
+				// TODO
+				FileIO.appendToFile(logFile, "CM: T type event recorded");
+				FileIO.appendToFile(logFile, "CM: I type event recorded");
+			} else if (evt.getSource() == excludeButton) {
+				// TODO
+				FileIO.appendToFile(logFile, "CM: E type event recorded");
+			}
+		}
+
 	}
 
 }

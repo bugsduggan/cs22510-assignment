@@ -1,10 +1,13 @@
 package util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,17 @@ public class FileIO {
 		}
 
 		return lines;
+	}
+
+	public static void appendToFile(String filename, String text) {
+		File f = new File(filename);
+		try {
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f)), true);
+			out.println(text);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
