@@ -7,14 +7,11 @@ import event.node.Node;
 import event.update.Update;
 import util.Parser;
 
-import java.awt.Dimension;
 import java.util.List;
 
 import javax.swing.JFrame;
 
 public class Driver {
-
-  private static JFrame top;
   
 	public static void main(String[] args) {
 		if (args.length < 6) {
@@ -43,19 +40,19 @@ public class Driver {
 			u.execute();
 		}
 
-		top = new JFrame("Checkpoint Manager");
-        top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JFrame top = new JFrame("Checkpoint Manager");
+    top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Dimension dim = new Dimension(800, 600);
-        top.setSize(dim);
-        top.setPreferredSize(dim);
-        top.setMinimumSize(dim);
-        top.setMaximumSize(dim);
+    //Dimension dim = new Dimension(800, 600);
+    //top.setSize(dim);
+    //top.setPreferredSize(dim);
+    //top.setMinimumSize(dim);
+    //top.setMaximumSize(dim);
 
 		CheckpointPanel panel = new CheckpointPanel(event);
-		top.add(panel);
+		top.setContentPane(panel);
 		panel.setVisible(true);
-
+    
 		top.pack();
 		top.setVisible(true);
 	}
