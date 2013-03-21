@@ -4,7 +4,9 @@
  * Tom Leaman (thl5@aber.ac.uk)
  */
 
+#include <fstream>
 #include <iostream>
+#include <string>
 
 int show_menu() {
 	using namespace std;
@@ -24,6 +26,45 @@ int show_menu() {
 	return result;
 }
 
+void write_event(std::string filename, std::string name, std::string date, std::string time) {
+	using namespace std;
+
+	ofstream file;
+	file.open(filename.c_str());
+
+	file << name << "\n";
+	file << date << "\n";
+	file << time << "\n";
+
+	file.close();
+}
+
+void create_event() {
+	using namespace std;
+
+	cout << "Please enter event name" << endl;
+	cout << ">> ";
+	string name;
+	cin >> name;
+
+	cout << "Please enter date" << endl;
+	cout << ">> ";
+	string date;
+	cin >> date;
+
+	cout << "Please enter start time" << endl;
+	cout << ">> ";
+	string time;
+	cin >> time;
+
+	cout << "Please enter file name to save data" << endl;
+	cout << ">> ";
+	string filename;
+	cin >> filename;
+
+	write_event(filename, name, date, time);
+}
+
 int main(int argc, char* argv[]) {
 	using namespace std;
 
@@ -34,6 +75,7 @@ int main(int argc, char* argv[]) {
 		int input = show_menu();
 		switch (input) {
 			case 1:
+				create_event();
 				break;
 			case 2:
 				break;
