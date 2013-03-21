@@ -4,9 +4,12 @@
  * Tom Leaman (thl5@aber.ac.uk)
  */
 
+#include <errno.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "vector.h"
 #include "util.h"
@@ -139,10 +142,46 @@ int time_to_duration(Time* time) {
   return time->minutes + (time->hours * 60);
 }
 
+/* copied this little fella from Neal's example */
+struct flock* file_lock(short type, short whence) {
+	static struct flock ret;
+	ret.l_type = type;
+	ret.l_start = 0;
+	ret.l_whence = whence;
+	ret.l_len = 0;
+	ret.l_pid = getpid();
+	return &ret;
+}
+
+/* also based on Neal's code */
 void append_to_file(char* filename, char* line) {
+	struct flock* fl;
 	FILE* fp;
+	int fd = open(filename, O_RDWR);
+
+	if (fd == -1) {
+		/* I think I'm going to want to create the file in here if it doesn't */
+		/* already exist */
+		/* TODO */
+		printf("File descriptor error");
+		exit(1);
+	}
+
+	fl = file_lock(F_WRLCK, SEEK_SET);
+
+	while (fcntl(fd, F_SETLK, fl) == -1) {
+		if (errno != EACCES && errno != EAGAIN) {
+			/* bad times! */
+			printf("can't get lock");
+			exit(1);
+		}
+	}
+
+	/* so now we have a lock */
 
 	fp = fopen(filename, "a+");
 	fprintf(fp, "%s\n", line);
+
+	fcntl(fd, F_SETLKW, file_lock(F_UNLCK, SEEK_SET));
 	fclose(fp);
 }
