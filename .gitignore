@@ -10,3 +10,7 @@ makefile
 *.d
 Debug/
 Release/
+*.aux
+*.log
+*.pdf
+*.toc
