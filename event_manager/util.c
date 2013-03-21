@@ -106,6 +106,18 @@ Vector* read_file(char* filename) {
   Vector* lines = Vector_new(sizeof(char**), string_dispose);
 
   fp = fopen(filename, "r");
+	if (fp == NULL) {
+		/* the file probably doesn't exist which could be the case for */
+		/* the log and times files, let's create them with a call to fopen */
+		fp = fopen(filename, "a+");
+		if (fp == NULL) {
+			/* bad times */
+			printf("Error opening %s\n", filename);
+			exit(1);
+		}
+		fclose(fp);
+		fp = fopen(filename, "r");
+	}
   while (fgets(line, MAX_LINE_LENGTH, fp) != NULL) {
     strtok(line, "\n");      /* strip newline */
     str = strdup(line);      /* make a new pointer */
@@ -168,7 +180,7 @@ void append_to_file(char* filename, char* line) {
 		fd = open(filename, O_RDWR);
 		if (fd == -1) {
 			/* bad times! */
-			printf("Error getting file descriptor");
+			printf("Error getting file descriptor\n");
 			exit(1);
 		}
 	}
@@ -178,7 +190,7 @@ void append_to_file(char* filename, char* line) {
 	while (fcntl(fd, F_SETLK, fl) == -1) {
 		if (errno != EACCES && errno != EAGAIN) {
 			/* bad times! */
-			printf("can't get lock");
+			printf("can't get lock\n");
 			exit(1);
 		}
 	}
