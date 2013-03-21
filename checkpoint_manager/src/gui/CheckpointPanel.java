@@ -36,10 +36,10 @@ public class CheckpointPanel extends JPanel {
 	private JButton submitButton;
 	private JButton excludeButton;
 
-	public CheckpointPanel(Event event, String logFile) {
+	public CheckpointPanel(Event event, String timesFile, String logFile) {
 		this.event = event;
 		// make components
-		ActionListener listener = new Listener(event, logFile);
+		ActionListener listener = new Listener(event, timesFile, logFile);
 
 		// north panel
 		JPanel northPanel = new JPanel();
@@ -167,10 +167,12 @@ public class CheckpointPanel extends JPanel {
 	private class Listener implements ActionListener {
 
 		private Event event;
+		private String timesFile;
 		private String logFile;
 
-		public Listener(Event event, String logFile) {
+		public Listener(Event event, String timesFile, String logFile) {
 			this.event = event;
+			this.timesFile = timesFile;
 			this.logFile = logFile;
 		}
 
@@ -184,30 +186,42 @@ public class CheckpointPanel extends JPanel {
 				Update update = new ArrivalUpdate(
 					getSelectedNode(), getSelectedEntrant(), getSelectedTime());
 				update.execute();
+				writeUpdate(update);
 				FileIO.appendToFile(logFile, "CM: A type event recorded");
 			} else if (evt.getSource() == departButton) {
 				Update update = new DepartureUpdate(
 					getSelectedNode(), getSelectedEntrant(), getSelectedTime());
 				update.execute();
+				writeUpdate(update);
 				FileIO.appendToFile(logFile, "CM: D type event recorded");
 		  } else if (evt.getSource() == submitButton) {
 				if (correctNode()) {
 					Update update = new TimeUpdate(
 							getSelectedNode(), getSelectedEntrant(), getSelectedTime());
 					update.execute();
+					writeUpdate(update);
 					FileIO.appendToFile(logFile, "CM: T type event recorded");
 				} else {
 					Update update = new InvalidUpdate(
 							getSelectedNode(), getSelectedEntrant(), getSelectedTime());
 					update.execute();
+					writeUpdate(update);
 					FileIO.appendToFile(logFile, "CM: I type event recorded");
 				}
 			} else if (evt.getSource() == excludeButton) {
 				Update update = new ExcludedUpdate(
 						getSelectedNode(), getSelectedEntrant(), getSelectedTime());
 				update.execute();
+				writeUpdate(update);
 				FileIO.appendToFile(logFile, "CM: E type event recorded");
 			}
+		}
+
+		private void writeUpdate(Update update) {
+			FileIO.appendToFile(timesFile, update.getType() + " " +
+					update.getNode().getId() + " " +
+					update.getEntrant().getId() + " " +
+					update.getTime());
 		}
 
 	}

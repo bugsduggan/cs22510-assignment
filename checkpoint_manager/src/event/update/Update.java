@@ -16,6 +16,8 @@ public abstract class Update {
 		this.time = time;
 	}
 
+	public abstract char getType();
+
 	public Node getNode() {
 		return node;
 	}

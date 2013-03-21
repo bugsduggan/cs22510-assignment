@@ -11,6 +11,11 @@ public class ArrivalUpdate extends Update {
 	}
 
 	@Override
+	public char getType() {
+		return 'A';
+	}
+
+	@Override
 	public void execute() {
 		getEntrant().updateLocation(getNode());
 		getEntrant().setStatus(Entrant.STOPPED);

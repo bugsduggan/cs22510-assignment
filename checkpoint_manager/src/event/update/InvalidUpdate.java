@@ -11,6 +11,11 @@ public class InvalidUpdate extends Update {
 	}
 
 	@Override
+	public char getType() {
+		return 'I';
+	}
+
+	@Override
 	public void execute() {
 		getEntrant().updateLocation(getNode());
 		getEntrant().setStatus(Entrant.DISQUALIFIED);

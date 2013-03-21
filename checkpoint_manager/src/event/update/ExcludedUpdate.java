@@ -11,6 +11,11 @@ public class ExcludedUpdate extends Update {
 	}
 
 	@Override
+	public char getType() {
+		return 'E';
+	}
+
+	@Override
 	public void execute() {
 		getEntrant().setStatus(Entrant.DISQUALIFIED);
 	}
