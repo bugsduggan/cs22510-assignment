@@ -21,6 +21,10 @@ public class Event {
 		return null;
 	}
 
+	public List<Node> getNodes() {
+		return nodes;
+	}
+
 	public Entrant getEntrant(int id) {
 		for (Entrant e : entrants) {
 			if (e.getId() == id) return e;

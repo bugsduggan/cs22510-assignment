@@ -38,7 +38,11 @@ public class CheckpointPanel extends JPanel {
 		entrantBox = new JComboBox<String>(entrants);
 		northPanel.add(entrantBox);
 
-		nodeBox = new JComboBox<String>();
+		String[] nodes = new String[event.getNodes().size()];
+		for (int i = 0; i < event.getNodes().size(); i++) {
+			nodes[i] = Integer.toString(event.getNodes().get(i).getId());
+		}
+		nodeBox = new JComboBox<String>(nodes);
 		northPanel.add(nodeBox);
 
 		add(northPanel, BorderLayout.NORTH);
