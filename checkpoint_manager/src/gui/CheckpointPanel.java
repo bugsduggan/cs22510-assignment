@@ -1,7 +1,11 @@
 package gui;
 
+import event.node.Node;
+import event.Entrant;
 import event.Event;
+import event.update.*;
 import util.FileIO;
+import util.Time;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +20,8 @@ import javax.swing.JTextField;
 
 public class CheckpointPanel extends JPanel {
 
+	private Event event;
+
 	private JComboBox<String> entrantBox;
 	private JComboBox<String> nodeBox;
 
@@ -29,6 +35,7 @@ public class CheckpointPanel extends JPanel {
 	private JButton excludeButton;
 
 	public CheckpointPanel(Event event, String logFile) {
+		this.event = event;
 		// make components
 		ActionListener listener = new Listener(event, logFile);
 
@@ -56,10 +63,12 @@ public class CheckpointPanel extends JPanel {
 
 		hrsField = new JTextField();
 		hrsField.setColumns(2);
+		hrsField.setText("00");
 		centrePanel.add(hrsField);
 
 		minsField = new JTextField();
 		minsField.setColumns(2);
+		minsField.setText("00");
 		centrePanel.add(minsField);
 
 		currTimeBox = new JCheckBox();
@@ -93,6 +102,28 @@ public class CheckpointPanel extends JPanel {
 		add(southPanel, BorderLayout.NORTH);
 	}
 
+	private Entrant getSelectedEntrant() {
+		String selected = (String)entrantBox.getSelectedItem();
+		for (Entrant e : event.getEntrants()) {
+			if (e.getName().equals(selected)) return e;
+		}
+		return null;
+	}
+
+	private Node getSelectedNode() {
+		String selected = (String)nodeBox.getSelectedItem();
+		for (Node n : event.getNodes()) {
+			if (Integer.toString(n.getId()).equals(selected)) return n;
+		}
+		return null;
+	}
+
+	private Time getSelectedTime() {
+		int hours = Integer.parseInt(hrsField.getText());
+		int minutes = Integer.parseInt(minsField.getText());
+		return new Time(hours, minutes);
+	}
+
 	private class Listener implements ActionListener {
 
 		private Event event;
@@ -108,17 +139,31 @@ public class CheckpointPanel extends JPanel {
 			if (evt.getSource() == currTimeBox) {
 				// TODO	
 			} else if (evt.getSource() == arriveButton) {
-				// TODO
+				Update update = new ArrivalUpdate(
+						getSelectedNode(), getSelectedEntrant(), getSelectedTime());
+				update.execute();
 				FileIO.appendToFile(logFile, "CM: A type event recorded");
 			} else if (evt.getSource() == departButton) {
-				// TODO
+				Update update = new DepartureUpdate(
+						getSelectedNode(), getSelectedEntrant(), getSelectedTime());
+				update.execute();
 				FileIO.appendToFile(logFile, "CM: D type event recorded");
 		  } else if (evt.getSource() == submitButton) {
-				// TODO
-				FileIO.appendToFile(logFile, "CM: T type event recorded");
-				FileIO.appendToFile(logFile, "CM: I type event recorded");
+				if (getSelectedNode() == getSelectedEntrant().getNextCheckpoint()) {
+					Update update = new TimeUpdate(
+							getSelectedNode(), getSelectedEntrant(), getSelectedTime());
+					update.execute();
+					FileIO.appendToFile(logFile, "CM: T type event recorded");
+				} else {
+					Update update = new InvalidUpdate(
+							getSelectedNode(), getSelectedEntrant(), getSelectedTime());
+					update.execute();
+					FileIO.appendToFile(logFile, "CM: I type event recorded");
+				}
 			} else if (evt.getSource() == excludeButton) {
-				// TODO
+				Update update = new ExcludedUpdate(
+						getSelectedNode(), getSelectedEntrant(), getSelectedTime());
+				update.execute();
 				FileIO.appendToFile(logFile, "CM: E type event recorded");
 			}
 		}

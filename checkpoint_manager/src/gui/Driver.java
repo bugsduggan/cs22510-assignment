@@ -51,7 +51,7 @@ public class Driver {
     //top.setMinimumSize(dim);
     //top.setMaximumSize(dim);
 
-		CheckpointPanel panel = new CheckpointPanel(event);
+		CheckpointPanel panel = new CheckpointPanel(event, logFile);
 		top.setContentPane(panel);
 		panel.setVisible(true);
     
