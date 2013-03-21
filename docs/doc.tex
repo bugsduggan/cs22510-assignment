@@ -1,6 +1,8 @@
 \documentclass[a4paper, twoside]{article}
 
 %\usepackage{fixltx2e}
+\usepackage{listings}
+\lstset{tabsize=2, breaklines=true, breakatwhitespace=true, basicstyle=\ttfamily}
 
 \setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
 \setlength{\textwidth}{6.2in}
@@ -17,7 +19,8 @@
 
 \section{Event Creator}
 \subsection{Source code}
-%TODO
+\subsubsection{main.cpp}
+\lstinputlisting{../event_creator/main.cpp}
 \subsection{Compiler output}
 %TODO
 \subsection{Example usage}
@@ -51,8 +54,16 @@ It does virtually no error checking (it will crash if it is given the wrong
 format for data e.g. a string instead of an int). I feel this is its greatest
 short-coming.
 \subsection{Checkpoint Manager}
-%TODO
+The Checkpoint Manager has been implemented in Java and makes use of the Swing
+framework. It allows the user to update the location of an entrant and performs
+very simple error checking to ensure that an entrant cannot be logged as
+arriving at a medical checkpoint twice, for example. It includes an option to
+use the current time for each update. It locks both the times file and log file
+when writing.
 \subsection{Event Manager}
-%TODO
+The Event Manager has been implemented in C (based on the previous CS237
+assignment). It allows the user to query the status of an individual entrant,
+list entrants in various states of competition and list the results (in sorted
+format). It also locks the log file when writing.
 
 \end{document}
