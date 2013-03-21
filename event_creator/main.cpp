@@ -65,6 +65,44 @@ void create_event() {
 	write_event(filename, name, date, time);
 }
 
+void write_entrant(std::string filename, int id, char course, std::string name) {
+	using namespace std;
+
+	ofstream file;
+	file.open(filename.c_str(), ios::app);
+
+	file << id << " " << course << " " << name << "\n";
+
+	file.close();
+}
+
+void add_entrant() {
+	using namespace std;
+
+	cout << "Please enter entrant id" << endl;
+	cout << ">> ";
+	int id;
+	cin >> id;
+
+	cout << "Please enter course id" << endl;
+	cout << ">> ";
+	char course;
+	cin >> course;
+
+	cout << "Please enter entrant name" << endl;
+	cout << ">> ";
+	string name;
+	cin.ignore();
+	getline(cin, name);
+
+	cout << "Please enter entrant file" << endl;
+	cout << ">> ";
+	string filename;
+	cin >> filename;
+
+	write_entrant(filename, id, course, name);
+}
+
 int main(int argc, char* argv[]) {
 	using namespace std;
 
@@ -78,6 +116,7 @@ int main(int argc, char* argv[]) {
 				create_event();
 				break;
 			case 2:
+				add_entrant();
 				break;
 			case 3:
 				break;
