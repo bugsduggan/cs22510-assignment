@@ -51,9 +51,11 @@ public class CheckpointPanel extends JPanel {
 		JPanel centrePanel = new JPanel();
 
 		hrsField = new JTextField();
+		hrsField.setColumns(2);
 		centrePanel.add(hrsField);
 
 		minsField = new JTextField();
+		minsField.setColumns(2);
 		centrePanel.add(minsField);
 
 		currTimeBox = new JCheckBox();
