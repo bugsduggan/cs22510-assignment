@@ -39,7 +39,6 @@ public class Parser {
 		for (String line : lines) {
 			String[] tokens = line.split(" ");
 			int id = Integer.parseInt(tokens[0]);
-
 			switch (tokens[1]) {
 				case "JN":
 					nodes.add(new JunctionNode(id));
@@ -56,7 +55,6 @@ public class Parser {
 					break;
 			}
 		}
-
 		return nodes;
 	}
 
@@ -73,7 +71,6 @@ public class Parser {
 
 		for (String line : lines) {
 			String[] tokens = line.split(" ");
-
 			char id = tokens[0].charAt(0); // should be 1 char
 			// ignore the next token, I don't care
 			List<Node> courseNodes = new ArrayList<Node>();
@@ -83,7 +80,6 @@ public class Parser {
 
 			courses.add(new Course(id, courseNodes));
 		}
-
 		return courses;
 	}
 
@@ -107,7 +103,6 @@ public class Parser {
 
 		for (String line : lines) {
 			String[] tokens = line.split(" ");
-
 			int id = Integer.parseInt(tokens[0]);
 			Course course = findCourse(tokens[1].charAt(0), courses);
 			String name = new String();
@@ -118,7 +113,6 @@ public class Parser {
 
 			entrants.add(new Entrant(id, course, name));
 		}
-
 		return entrants;
 	}
 
@@ -142,7 +136,6 @@ public class Parser {
 
 		for (String line : lines) {
 			String[] tokens = line.split(" ");
-			
 			char type = tokens[0].charAt(0); // should be 1 char
 			Node node = event.getNode(Integer.parseInt(tokens[1]));
 			Entrant entrant = event.getEntrant(Integer.parseInt(tokens[2]));
@@ -171,7 +164,6 @@ public class Parser {
 					break;
 			}
 		}
-
 		return updates;
 	}
 
