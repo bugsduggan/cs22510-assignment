@@ -20,7 +20,14 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class CheckpointPanel extends JPanel {
+
+	private static final long serialVersionUID = 7212846449217761749L;
 
 	private Event event;
 
@@ -39,7 +46,7 @@ public class CheckpointPanel extends JPanel {
 	public CheckpointPanel(Event event, String timesFile, String logFile) {
 		this.event = event;
 		// make components
-		ActionListener listener = new Listener(event, timesFile, logFile);
+		ActionListener listener = new Listener(timesFile, logFile);
 
 		// north panel
 		JPanel northPanel = new JPanel();
@@ -172,12 +179,10 @@ public class CheckpointPanel extends JPanel {
 
 	private class Listener implements ActionListener {
 
-		private Event event;
 		private String timesFile;
 		private String logFile;
 
-		public Listener(Event event, String timesFile, String logFile) {
-			this.event = event;
+		public Listener(String timesFile, String logFile) {
 			this.timesFile = timesFile;
 			this.logFile = logFile;
 		}
