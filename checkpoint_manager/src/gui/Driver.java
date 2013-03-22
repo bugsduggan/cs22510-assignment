@@ -5,6 +5,7 @@ import event.Entrant;
 import event.Event;
 import event.node.Node;
 import event.update.Update;
+import util.FileIO;
 import util.Parser;
 
 import java.util.List;
@@ -45,6 +46,7 @@ public class Driver {
 		for (Update u : updates) {
 			u.execute();
 		}
+		FileIO.appendToFile(logFile, "CM: processed " + updates.size() + " updates from " + timeFile);
 
 		JFrame top = new JFrame("Checkpoint Manager");
     top.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
