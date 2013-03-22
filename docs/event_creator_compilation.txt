@@ -1,0 +1,2 @@
+tom@twoflower:~/cs22510-assignment/event_creator $ make main
+g++     main.cpp   -o main
