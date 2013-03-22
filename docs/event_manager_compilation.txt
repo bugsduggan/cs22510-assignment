@@ -1,4 +1,4 @@
-tom@twoflower:~/cs22510-assignment/event_manager ~ $ make main
+tom@twoflower:~/cs22510-assignment/event_manager $ make main
 cc -Wall -g -std=c89   -c -o node.o node.c
 cc -Wall -g -std=c89   -c -o track.o track.c
 cc -Wall -g -std=c89   -c -o course.o course.c
