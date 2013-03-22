@@ -21,9 +21,9 @@ public class Driver {
 			System.exit(1);
 		}
 
-		String eventFile = args[0];
+		//String eventFile = args[0];
 		String nodeFile = args[1];
-		String trackFile = args[2];
+		//String trackFile = args[2];
 		String courseFile = args[3];
 		String entrantFile = args[4];
 		String timeFile = args[5];
