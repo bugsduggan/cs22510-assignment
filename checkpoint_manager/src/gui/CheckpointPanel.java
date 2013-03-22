@@ -45,6 +45,8 @@ public class CheckpointPanel extends JPanel {
 
 	public CheckpointPanel(Event event, String timesFile, String logFile) {
 		this.event = event;
+		this.setLayout(new BorderLayout());
+		
 		// make components
 		ActionListener listener = new Listener(timesFile, logFile);
 
@@ -107,7 +109,7 @@ public class CheckpointPanel extends JPanel {
 		excludeButton.addActionListener(listener);
 		southPanel.add(excludeButton);
 
-		add(southPanel, BorderLayout.NORTH);
+		add(southPanel, BorderLayout.SOUTH);
 
 		updateTime();
 		updateButtons();
