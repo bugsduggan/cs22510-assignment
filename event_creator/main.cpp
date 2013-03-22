@@ -46,12 +46,14 @@ void create_event() {
 	cout << "Please enter event name" << endl;
 	cout << ">> ";
 	string name;
-	cin >> name;
+	cin.ignore();
+	getline(cin, name);
 
 	cout << "Please enter date" << endl;
 	cout << ">> ";
 	string date;
-	cin >> date;
+	cin.ignore();
+	getline(cin, date);
 
 	cout << "Please enter start time" << endl;
 	cout << ">> ";
