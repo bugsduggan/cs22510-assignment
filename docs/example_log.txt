@@ -1,0 +1,6 @@
+CM: processed 198 updates from ../data/times.txt
+EM: entrant query
+EM: entrants listed - disqualified
+CM: D type event recorded
+EM: entrant query
+EM: quitting
