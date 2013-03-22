@@ -1,6 +1,7 @@
 \documentclass[a4paper, twoside]{article}
 
 %\usepackage{fixltx2e}
+\usepackage{graphicx}
 \usepackage{listings}
 \lstset{tabsize=2, breaklines=true, breakatwhitespace=true, basicstyle=\ttfamily}
 
@@ -21,6 +22,8 @@
 \subsection{Source code}
 \subsubsection{main.cpp}
 \lstinputlisting{../event_creator/main.cpp}
+\subsubsection{Makefile}
+\lstinputlisting{../event_creator/Makefile}
 \subsection{Compiler output}
 %TODO
 \subsection{Example usage}
@@ -30,7 +33,6 @@
 
 \section{Checkpoint Manager}
 \subsection{Source code}
-% Event package
 \subsubsection{event/Course.java}
 \lstinputlisting{../checkpoint_manager/src/event/Course.java}
 \subsubsection{event/Entrant.java}
@@ -70,11 +72,18 @@
 \subsection{Compiler output}
 %TODO
 \subsection{Example usage}
+\subsubsection{Checkpoint logging}
+\includegraphics{screenshot1.jpg}
+\subsubsection{Arriving at a medical checkpoint}
+\includegraphics{screenshot2.jpg}
+\subsubsection{Departing a medical checkpoint}
+\includegraphics{screenshot3.jpg}
+\subsubsection{File locking}
 %TODO
 
 \section{Event Manager}
 \subsection{Compiler output}
-%TODO
+\lstinputlisting{event_manager_compilation.txt}
 \subsection{Example usage}
 %TODO
 \subsection{Generated results}

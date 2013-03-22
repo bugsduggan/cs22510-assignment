@@ -1,0 +1,9 @@
+tom@twoflower:~/cs22510-assignment/event_manager ~ $ make main
+cc -Wall -g -std=c89   -c -o node.o node.c
+cc -Wall -g -std=c89   -c -o track.o track.c
+cc -Wall -g -std=c89   -c -o course.o course.c
+cc -Wall -g -std=c89   -c -o entrant.o entrant.c
+cc -Wall -g -std=c89   -c -o event.o event.c
+cc -Wall -g -std=c89   -c -o vector.o vector.c
+cc -Wall -g -std=c89   -c -o util.o util.c
+cc -Wall -g -std=c89    main.c node.o track.o course.o entrant.o event.o vector.o util.o   -o main
