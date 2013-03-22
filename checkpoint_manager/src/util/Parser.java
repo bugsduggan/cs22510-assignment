@@ -18,6 +18,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class Parser {
 
 	public static List<Node> parseNodes(String filename) {

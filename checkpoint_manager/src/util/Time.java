@@ -1,5 +1,10 @@
 package util;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class Time {
 
 	private int hours;

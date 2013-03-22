@@ -4,6 +4,11 @@ import event.Entrant;
 import event.node.Node;
 import util.Time;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class DepartureUpdate extends Update {
 
 	public DepartureUpdate(Node node, Entrant entrant, Time time) {

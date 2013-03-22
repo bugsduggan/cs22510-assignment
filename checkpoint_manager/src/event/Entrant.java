@@ -3,6 +3,11 @@ package event;
 import event.node.Node;
 import event.node.JunctionNode;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class Entrant {
 
 	public static final Status NOT_STARTED = Status.NOT_STARTED;

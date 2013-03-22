@@ -4,6 +4,11 @@ import event.Entrant;
 import event.node.Node;
 import util.Time;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class TimeUpdate extends Update {
 
 	public TimeUpdate(Node node, Entrant entrant, Time time) {

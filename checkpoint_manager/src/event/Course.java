@@ -4,6 +4,11 @@ import event.node.Node;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class Course {
 
 	private char id;

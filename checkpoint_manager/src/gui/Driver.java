@@ -11,6 +11,11 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class Driver {
   
 	public static void main(String[] args) {

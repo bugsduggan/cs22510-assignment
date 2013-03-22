@@ -11,6 +11,11 @@ import java.nio.channels.FileLock;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public class FileIO {
 
 	public static List<String> readLines(String filename)

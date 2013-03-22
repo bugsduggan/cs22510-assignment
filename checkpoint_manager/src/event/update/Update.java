@@ -4,6 +4,11 @@ import event.Entrant;
 import event.node.Node;
 import util.Time;
 
+/**
+ * 
+ * @author Tom Leaman (thl5@aber.ac.uk)
+ *
+ */
 public abstract class Update {
 
 	private Node node;
