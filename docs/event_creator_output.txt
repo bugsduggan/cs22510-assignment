@@ -1,0 +1,181 @@
+tom@twoflower:~/cs22510-assignment/event_creator $ ./main
+Event Creator
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 1
+Please enter event name
+>> 100 Metre Dash
+Please enter date
+>> 23rd March 2013
+Please enter start time
+>> 10:00
+Please enter file name to save data
+>> name.txt
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 2
+Please enter entrant id
+>> 1
+Please enter course id
+>> A
+Please enter entrant name
+>> Alan Freeman
+Please enter entrant file
+>> entrants.txt
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 2
+Please enter entrant id
+>> 2
+Please enter course id
+>> A
+Please enter entrant name
+>> Pete Murray
+Please enter entrant file
+>> entrants.txt
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 2
+Please enter entrant id
+>> 3
+Please enter course id
+>> A
+Please enter entrant name
+>> David Jacobs
+Please enter entrant file
+>> entrants.txt
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 2
+Please enter entrant id
+>> 4
+Please enter course id
+>> B
+Please enter entrant name
+>> Samantha Juste
+Please enter entrant file
+>> entrants.txt
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 2
+Please enter entrant id
+>> 5
+Please enter course id
+>> B
+Please enter entrant name
+>> Simon Dee
+Please enter entrant file
+>> entrants.txt
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 3
+Please enter course id
+>> A
+Please enter the number of nodes
+>> 8
+Please enter node 1
+>> 1
+Please enter node 2
+>> 2
+Please enter node 3
+>> 3
+Please enter node 4
+>> 9
+Please enter node 5
+>> 12
+Please enter node 6
+>> 13
+Please enter node 7
+>> 2
+Please enter node 8
+>> 1
+Please enter course file
+>> courses.txt
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 3
+Please enter course id
+>> B
+Please enter the number of nodes
+>> 11
+Please enter node 1
+>> 1
+Please enter node 2
+>> 2
+Please enter node 3
+>> 3
+Please enter node 4
+>> 9
+Please enter node 5
+>> 8
+Please enter node 6
+>> 10
+Please enter node 7
+>> 11
+Please enter node 8
+>> 12
+Please enter node 9
+>> 13
+Please enter node 10
+>> 2
+Please enter node 11
+>> 1
+Please enter course file
+>> courses.txt
+
+Menu
+
+	1. Create new event
+	2. Add entrant
+	3. Add course
+	4. Quit
+
+>> 4
