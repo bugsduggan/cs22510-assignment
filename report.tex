@@ -1,0 +1,68 @@
+\documentclass[a4paper, twoside]{article}
+
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.2in}
+\setlength{\topmargin}{-0.3in} \setlength{\textheight}{9.8in}
+
+\title{CS22510 Assignment - Part 2}
+\author{Tom Leaman (thl5)}
+
+\begin{document}
+\maketitle
+\newpage
+
+\section{Language selection for part 1}
+\subsection{Checkpoint Manager}
+I decided to write the Checkpoint Manager program in Java as this allowed me to
+make use of the Swing libraries to write the GUI. The Swing framework provides
+an easy-to-use set of widgets which (at least in theory) is not platform
+specific. This means that a single compiled version of the program can be run on
+a whole host of different hardware during the event. This would mean that the
+event organisers (who will probably want a computer at each monitored
+checkpoint) can make use of any and all machines that can be begged and borrowed
+for the event. The only requirement is that they are able to run a JVM.
+
+\subsection{Event Manager}
+I wrote the Event Manager program in C. This program is, in essence, a
+refactoring of the CS127 assignment and to write this again in another language
+(especially one which I am less familiar with) I felt was simply not sensible in
+the time alloted.
+
+That said, I feel that this is the most important part of the system, especially
+in terms of race safety (it may be critical to know whether competitors are
+still running or not) and I think it would be easier to have confidence in this
+program (after a proper software audit) as every part of the system can be
+examined. That is, the program makes only very minimal use of external libraries
+and those that are used are well understood and trusted. If this program were to
+be written in Java, for example, it would be easier to make use of a library
+which may not do exactly what it claims.
+
+\subsection{Event Creator}
+My decision to write the Event Creator in C++ was essentially forced by the
+specification to write each program in a different language. I have made no use
+of C++'s ability to provide an Object Oriented class structure. Of the three
+programs, this was the most simple and C++ is the language I am least familiar
+with.
+
+\section{My Experiences}
+Having programmed in Java for nearly 2 years before arriving at University, I
+feel I have a reasonably good grasp of what is and is not achievable, in
+addition to a good understanding of the Swing framework. This allowed me to
+write the Checkpoint Manager program reasonably quickly.
+
+I feel strongly that Java's primary benefit is the wealth of libraries available
+(for free, no less!) in addition to the inline documentation provided by
+Javadoc. This makes it incredibly easy to write clean, reusable code with
+accurate, helpful documentation.
+
+My only frustration with Java is that it is quite easy (even likely) that one
+will end up producing several files with little to no actual code within them.
+For example, a simple interface with only a single function will add an entire
+file, plus boiler-plate for the interface declaration, when in essence we only
+care about the single line defining the method in question. This can lead to
+a quite complicated directory structure before any useful code is actually
+written. On the other hand, this does allow the programmer to make good use of
+the Object Oriented-ness of Java and all that that brings with it (e.g. type
+safety).
+
+\end{document}
